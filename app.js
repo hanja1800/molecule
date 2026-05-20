@@ -7,9 +7,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     // 1. DOM Elements
-    const loaderContainer = document.getElementById("loader-container");
-    const loaderStatus = document.getElementById("loader-status");
-    const loaderProgress = document.getElementById("loader-progress");
     const appLayout = document.getElementById("app-layout");
     
     const searchInput = document.getElementById("search-input");
@@ -47,87 +44,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Ultra-premium Database Loader (Fetch with detailed percentage progress)
     async function loadDatabases() {
         try {
-            loaderStatus.textContent = "한자 유전자(IDS) 데이터 다운로드 중...";
+            // Fetch databases
+            const dbResponse = await fetch("hanja_db.json");
+            hanjaDb = await dbResponse.json();
             
-            // Fetch hanja_db.json
-            const dbData = await fetchWithProgress("hanja_db.json", (percent) => {
-                loaderProgress.style.width = `${percent * 0.8}%`; // Max 80% for primary DB
-                loaderStatus.textContent = `데이터베이스 다운로드 중... (${Math.round(percent)}%)`;
-            });
-            hanjaDb = dbData;
-            
-            loaderStatus.textContent = "역방향 계보 색인(Reverse Index) 합성 중...";
-            loaderProgress.style.width = "90%";
-            
-            // Fetch reverse_index.json
             const revResponse = await fetch("reverse_index.json");
             reverseIndex = await revResponse.json();
-            
-            loaderProgress.style.width = "100%";
-            loaderStatus.textContent = "분자 결합 시각화 엔진 활성화 완료!";
             
             // Inject total stats
             document.getElementById("stat-total-hanja").textContent = Object.keys(hanjaDb).length.toLocaleString();
             
-            setTimeout(() => {
-                loaderContainer.classList.add("fade-out");
-                appLayout.classList.remove("hidden");
-                renderHistory();
-                
-                // Auto-search if URL parameter 'q' is provided
-                const urlParams = new URLSearchParams(window.location.search);
-                const query = urlParams.get('q');
-                if (query) {
-                    searchInput.value = query;
-                    handleSearch();
-                }
-            }, 600);
+            renderHistory();
+            
+            // Auto-search if URL parameter 'q' is provided
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            if (query) {
+                searchInput.value = query;
+                handleSearch();
+            }
 
         } catch (error) {
             console.error("Database initialization failed:", error);
-            loaderStatus.innerHTML = "<span style='color: var(--neon-pink);'>데이터 로드 실패! 웹 서버를 실행해 주세요.</span>";
-            loaderStatus.style.textShadow = "0 0 10px rgba(255, 0, 122, 0.4)";
         }
-    }
-
-    // Custom Fetch with Stream reader for progress bar
-    async function fetchWithProgress(url, onProgress) {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        const contentLength = response.headers.get("content-length");
-        
-        // Fallback for servers without Content-Length header (e.g. some local servers)
-        if (!contentLength) {
-            const data = await response.json();
-            onProgress(100);
-            return data;
-        }
-        
-        const totalBytes = parseInt(contentLength, 10);
-        let loadedBytes = 0;
-        
-        const reader = response.body.getReader();
-        const chunks = [];
-        
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            
-            chunks.push(value);
-            loadedBytes += value.length;
-            onProgress((loadedBytes / totalBytes) * 100);
-        }
-        
-        const allChunks = new Uint8Array(loadedBytes);
-        let position = 0;
-        for (const chunk of chunks) {
-            allChunks.set(chunk, position);
-            position += chunk.length;
-        }
-        
-        const text = new TextDecoder("utf-8").decode(allChunks);
-        return JSON.parse(text);
     }
 
     // 4. In-Memory Search Engine & Radical Clustering

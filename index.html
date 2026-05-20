@@ -16,25 +16,8 @@
 </head>
 <body>
 
-    <!-- 1. 프리미엄 로딩 화면 (9MB 대용량 DB 로딩 대비) -->
-    <div id="loader-container" class="loader-container">
-        <div class="loader-content">
-            <div class="logo-neon">
-                <span class="logo-text">HANJA</span>
-                <span class="logo-glow">MOLECULE</span>
-            </div>
-            <div class="spinner-outer">
-                <div class="spinner-inner"></div>
-            </div>
-            <p id="loader-status" class="loader-status">데이터베이스 분자식을 합성하는 중...</p>
-            <div class="progress-bar-container">
-                <div id="loader-progress" class="loader-progress"></div>
-            </div>
-        </div>
-    </div>
-
     <!-- 2. 메인 애플리케이션 화면 -->
-    <div id="app-layout" class="app-layout hidden">
+    <div id="app-layout" class="app-layout">
         
         <!-- 네비게이션 헤더 -->
         <header class="main-header">
@@ -126,6 +109,7 @@
                                         <span class="badge-item"><i class="ti ti-certificate"></i> 어문회 <span id="detail-level">4급</span></span>
                                         <span class="badge-item"><i class="ti ti-border-all"></i> 부수 <span id="detail-radical">宀 (갓머리)</span></span>
                                         <span class="badge-item"><i class="ti ti-edit"></i> 획수 <span id="detail-strokes">10획</span></span>
+                                        <span class="badge-item" id="detail-vowel-item"><i class="ti ti-volume"></i> 발음 장단 <span id="detail-vowel">-</span></span>
                                     </div>
                                 </div>
                             </div>
