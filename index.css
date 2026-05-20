@@ -822,6 +822,31 @@ body {
     overflow: hidden;
 }
 
+.ids-tip-banner {
+    background: rgba(0, 240, 255, 0.03);
+    border: 1px solid rgba(0, 240, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 8px 0 12px 0;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+}
+
+.ids-tip-banner i {
+    color: var(--neon-blue);
+    font-size: 0.95rem;
+    margin-top: 1px;
+    flex-shrink: 0;
+}
+
+.ids-tip-banner strong {
+    color: var(--neon-blue);
+}
+
 .card-subtitle {
     font-size: 0.75rem;
     color: var(--text-muted);
