@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한자 분자식 검색기 | Hanja Molecule Finder</title>
-    <meta name="description" content="한자를 레고 블록처럼 분해하고, 구성 요소 및 부수를 통해 동일한 유전자를 공유하는 한자 그룹을 탐색하는 프리미엄 한자 분자식 검색기입니다.">
+    <meta name="description" content="한자를 구조별로 분해하고, 공통된 구성 요소 및 부수를 포함하는 연관 한자들을 쉽게 탐색할 수 있는 한자 검색기입니다.">
     <!-- Google Fonts: Outfit & Noto Sans KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
         <header class="main-header">
             <div class="header-logo">
                 <i class="ti ti-atom-2 logo-icon"></i>
-                <h1>Hanja <span class="accent-text">Molecule</span> Finder</h1>
+                <h1>한자 <span class="accent-text">구조</span> 검색기</h1>
             </div>
             <div class="header-meta-info">
                 <span class="badge neon-blue"><i class="ti ti-database"></i> <span id="stat-total-hanja">5,979</span>자 로드됨</span>
@@ -51,7 +51,7 @@
                 <!-- 최근 검색어 카드 -->
                 <div id="recent-searches-card" class="glass-card recent-card hidden">
                     <div class="card-header">
-                        <h3><i class="ti ti-history"></i> 최근 탐색한 분자식</h3>
+                        <h3><i class="ti ti-history"></i> 최근 검색한 한자</h3>
                         <button id="clear-history-btn" class="text-btn">모두 삭제</button>
                     </div>
                     <div id="recent-tags-container" class="tags-container">
@@ -71,7 +71,7 @@
                         <!-- 검색된 한자들이 카드 형태로 나열됨 -->
                         <div class="empty-state">
                             <i class="ti ti-atom"></i>
-                            <p>한자, 한글 음, 혹은 부수 구성요소를 입력하여 분자 지도를 탐색해보세요.</p>
+                            <p>한자, 한글 음, 혹은 부수 구성요소를 입력하여 한자를 탐색해보세요.</p>
                         </div>
                     </div>
                 </div>
@@ -88,8 +88,8 @@
                         <div class="orbit orbit-3"></div>
                         <div class="nucleus"><i class="ti ti-atom-2"></i></div>
                     </div>
-                    <h2>한자 분자식 뷰어</h2>
-                    <p>좌측에서 한자를 검색하거나 선택하면,<br>그 한자의 미시적 구조 분해 트리와 동일 유전자를 공유한 패밀리 한자들을 완벽히 해독해 냅니다.</p>
+                    <h2>한자 상세 구조 뷰어</h2>
+                    <p>좌측에서 한자를 검색하거나 선택하면,<br>해당 한자의 구조 분해와 공통된 요소를 포함하는 연관 한자들을 보여줍니다.</p>
                 </div>
 
                 <!-- 메인 콘텐츠 뷰어 (선택 시 활성화) -->
@@ -118,8 +118,8 @@
                         <!-- 레고 블록 분해 트리 카드 -->
                         <div class="glass-card decomposition-card">
                             <div class="card-header">
-                                <h3><i class="ti ti-hierarchy-2"></i> 레고 블록식 자형 분해 (IDS Recipe)</h3>
-                                <span class="card-subtitle">노드를 클릭하면 해당 구성요소의 분자 지도로 즉시 이동합니다.</span>
+                                <h3><i class="ti ti-hierarchy-2"></i> 한자 구조 분해 (IDS)</h3>
+                                <span class="card-subtitle">노드를 클릭하면 해당 구성요소로 즉시 검색할 수 있습니다.</span>
                             </div>
                             <div id="ids-tree-container" class="tree-viewport scrollable">
                                 <!-- 여기에 동적으로 레고 블록 트리 렌더링됨 -->
@@ -131,8 +131,8 @@
                     <div class="glass-card family-card flex-grow">
                         <div class="card-header flex-row-between">
                             <div class="header-titles">
-                                <h3><i class="ti ti-users-group"></i> 분자 패밀리 그룹 (Genetic Relatives)</h3>
-                                <span class="card-subtitle">선택한 한자의 구성 요소를 포함하는 다른 어문회 배정한자들입니다.</span>
+                                <h3><i class="ti ti-users-group"></i> 공통 요소를 포함하는 한자</h3>
+                                <span class="card-subtitle">선택한 한자의 구성 요소를 공유하는 다른 어문회 배정한자들입니다.</span>
                             </div>
                             <div class="component-selector-wrapper">
                                 <label for="family-component-select"><i class="ti ti-filter"></i> 구성요소 필터:</label>
@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="family-stats-bar">
-                            <span>총 <strong id="family-count">0</strong>개의 한자 패밀리가 발견되었습니다.</span>
+                            <span>총 <strong id="family-count">0</strong>개의 연관 한자가 발견되었습니다.</span>
                         </div>
                         <div id="family-grid-container" class="family-grid scrollable">
                             <!-- 급수별로 그룹화된 패밀리 카드가 동적으로 채워짐 -->
@@ -155,7 +155,7 @@
         
         <!-- 푸터 -->
         <footer class="main-footer">
-            <p>© 2026 Hanja Molecule Finder. Powered by Unicode IDS & 어문회 데이터베이스. Serverless static Jamstack.</p>
+            <p>© 2026 Hanja Structure Finder. Powered by Unicode IDS & 어문회 데이터베이스.</p>
         </footer>
     </div>
 

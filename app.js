@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsList.innerHTML = `
             <div class="empty-state">
                 <i class="ti ti-atom"></i>
-                <p>한자, 한글 음, 혹은 부수 구성요소를 입력하여 분자 지도를 탐색해보세요.</p>
+                <p>한자, 한글 음, 혹은 부수 구성요소를 입력하여 한자를 탐색해보세요.</p>
             </div>
         `;
     }
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
             resultsList.innerHTML = `
                 <div class="empty-state">
                     <i class="ti ti-mood-empty"></i>
-                    <p>분자 결합에 매치되는 한자가 데이터베이스에 없습니다.</p>
+                    <p>검색 조건에 맞는 한자가 데이터베이스에 없습니다.</p>
                 </div>
             `;
             return;
@@ -452,7 +452,7 @@ document.addEventListener("DOMContentLoaded", () => {
             familyGridContainer.innerHTML = `
                 <div class="empty-state">
                     <i class="ti ti-dna-2"></i>
-                    <p>해당 요소를 유전자로 공유하는 다른 배정한자가 없습니다.</p>
+                    <p>해당 요소를 포함하는 다른 배정한자가 없습니다.</p>
                 </div>
             `;
             return;
@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
             familyGridContainer.innerHTML = `
                 <div class="empty-state">
                     <i class="ti ti-dna-2"></i>
-                    <p>이 한자가 해당 유전자를 독점적으로 품고 있습니다.</p>
+                    <p>이 한자만이 유일하게 해당 요소를 포함하고 있습니다.</p>
                 </div>
             `;
             return;
