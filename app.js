@@ -73,6 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 loaderContainer.classList.add("fade-out");
                 appLayout.classList.remove("hidden");
                 renderHistory();
+                
+                // Auto-search if URL parameter 'q' is provided
+                const urlParams = new URLSearchParams(window.location.search);
+                const query = urlParams.get('q');
+                if (query) {
+                    searchInput.value = query;
+                    handleSearch();
+                }
             }, 600);
 
         } catch (error) {
