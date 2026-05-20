@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.querySelectorAll(".hanja-row-card").forEach(c => c.classList.remove("active"));
                 card.classList.add("active");
                 
-                showHanjaDetails(char);
+                showHanjaDetails(char, true);
             });
             
             resultsList.appendChild(card);
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 5. Hanja Profile & LEGO IDS Tree Renderer
-    function showHanjaDetails(char) {
+    function showHanjaDetails(char, shouldScroll = false) {
         const meta = hanjaDb[char];
         if (!meta) return;
         
@@ -259,6 +259,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Hide empty viewer and show content viewer
         viewerEmptyState.classList.add("hidden");
         viewerContent.classList.remove("hidden");
+        
+        if (shouldScroll) {
+            viewerContent.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
         
         // Populate profile card
         // r: reading, mn: meaning, lv: grade, rd: radical, s1: strokes, s2: total_strokes
@@ -495,7 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // If it is in DB, select it immediately
             if (hanjaDb[char]) {
-                showHanjaDetails(char);
+                showHanjaDetails(char, true);
             }
         });
         
@@ -698,7 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 
                 cell.addEventListener("click", () => {
-                    showHanjaDetails(char);
+                    showHanjaDetails(char, true);
                     
                     // Auto-sync search result focus if visible
                     const activeResultCard = Array.from(document.querySelectorAll(".hanja-row-card"))
@@ -762,7 +766,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tag.innerHTML = `<strong>${char}</strong> <span style="opacity: 0.7;">${meta.r}</span>`;
                 
                 tag.addEventListener("click", () => {
-                    showHanjaDetails(char);
+                    showHanjaDetails(char, true);
                 });
                 
                 recentTagsContainer.appendChild(tag);
