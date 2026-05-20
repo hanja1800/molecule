@@ -196,7 +196,7 @@ body {
     animation: fadeIn 0.8s ease-out;
 }
 
-.app-layout.hidden {
+.hidden {
     display: none !important;
 }
 
@@ -827,33 +827,33 @@ body {
     border: 1px solid rgba(0, 240, 255, 0.15);
     border-left: 4px solid var(--neon-blue);
     border-radius: 10px;
-    padding: 12px 18px;
-    margin: 10px 0 16px 0;
-    font-size: 0.88rem;
+    padding: 14px 20px;
+    margin: 12px 0 18px 0;
+    font-size: 1.05rem;
     color: var(--text-primary);
     display: flex;
     align-items: center;
-    gap: 12px;
-    line-height: 1.5;
+    gap: 14px;
+    line-height: 1.6;
     box-shadow: 0 4px 20px rgba(0, 240, 255, 0.05);
 }
 
 .ids-tip-banner i {
     color: var(--neon-blue);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
     flex-shrink: 0;
 }
 
 .ids-tip-banner strong {
-    color: var(--neon-blue);
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-    font-weight: 700;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 10px rgba(255, 223, 0, 0.4);
+    font-weight: 800;
 }
 
 .empty-state-tip {
     margin-top: 35px;
-    max-width: 500px;
+    max-width: 580px;
     text-align: left;
 }
 
