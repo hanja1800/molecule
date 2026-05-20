@@ -1229,3 +1229,38 @@ body {
         padding: 15px 20px;
     }
 }
+
+/* Premium Vowel Length Badges */
+.badge-item.vowel-long {
+    background: rgba(255, 179, 0, 0.08) !important;
+    border-color: rgba(255, 179, 0, 0.25) !important;
+    color: #ffc107 !important;
+    box-shadow: 0 0 10px rgba(255, 179, 0, 0.15);
+}
+.badge-item.vowel-long i {
+    color: #ffc107 !important;
+}
+
+.badge-item.vowel-short {
+    background: rgba(0, 240, 255, 0.05) !important;
+    border-color: rgba(0, 240, 255, 0.15) !important;
+    color: #8ef7ff !important;
+}
+.badge-item.vowel-short i {
+    color: #00f0ff !important;
+}
+
+/* Premium Vowel Mark Character Beside Huge Character */
+.vowel-mark-char {
+    font-size: 2.2rem;
+    color: var(--neon-yellow);
+    vertical-align: middle;
+    margin-left: 4px;
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(255, 223, 0, 0.5), 0 0 20px rgba(255, 223, 0, 0.2);
+    display: inline-block;
+    transform: translateY(-0.15em);
+    user-select: none;
+}
+
+
