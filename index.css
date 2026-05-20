@@ -429,10 +429,11 @@ body {
     transition: var(--transition-fast);
 }
 
+/* 피드백 #8 보완: 세로 목록에서 가로 이동(translateX)은 비자연스러움 → 제거 */
+/* border-color + background 변화만으로 hover 상태 충분히 전달 */
 .hanja-row-card:hover {
     background: var(--bg-paper);
     border-color: var(--text-muted);
-    transform: translateX(3px);
 }
 
 .hanja-row-card.active {
@@ -590,9 +591,9 @@ body {
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 20px;
-    /* 피드백 #5: 48% 고정 제거 → 트리 깊이에 따라 자연스럽게 확장 */
+    /* max-height 48% 고정 제거 → 내용에 따라 자연스럽게 확장 */
+    /* flex-shrink: 1(기본값)을 유지해야 family-card가 화면 밖으로 밀리지 않음 */
     min-height: 0;
-    flex-shrink: 0;
 }
 
 /* Profile Card */
