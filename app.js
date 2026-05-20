@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span class="row-meta-sub">부수: ${meta.rd} | ${meta.s2}획</span>
                     </div>
                 </div>
-                <div class="row-right-badge level-badge">${meta.lv}</div>
+                <div class="row-right-badge level-badge">${getFriendlyGrade(meta.lv)}</div>
             `;
             
             card.addEventListener("click", () => {
@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
         detailChar.innerHTML = displayCharHtml;
         
         detailReadingMeaning.textContent = `${meta.r} (${cleanMeaning})`;
-        detailLevel.textContent = meta.lv;
+        detailLevel.textContent = getFriendlyGrade(meta.lv);
         detailRadical.textContent = `${meta.rd} (획수: ${meta.s1}획)`;
         detailStrokes.textContent = `${meta.s2}획`;
         
@@ -415,17 +415,27 @@ document.addEventListener("DOMContentLoaded", () => {
         // Find classification using obfuscated types (hj, rc, ot)
         let type = "other";
         let subText = "미분류";
+        let fullTitle = "미분류";
         
         if (hanjaDb[char]) {
             type = "hanja";
-            subText = `${hanjaDb[char].r} (${hanjaDb[char].lv})`;
+            const meta = hanjaDb[char];
+            const cleanMn = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
+            const friendlyGrade = getFriendlyGrade(meta.lv);
+            
+            subText = `${cleanMn} ${friendlyGrade}`;
+            fullTitle = `${char}: ${cleanMn} (${friendlyGrade})`;
         } else if (isKangxiRadical(char)) {
             type = "radical";
             subText = "부수";
+            fullTitle = `${char}: 부수`;
+        } else {
+            fullTitle = `${char}: 미분류 요소`;
         }
         
         // Bind correct CSS types: type-hanja, type-radical, type-other
         block.className = `lego-block type-${type}${hasChildren ? " has-children" : ""}`;
+        block.title = fullTitle; // Prevent content clipping by offering full info as hover tooltip
         
         let expandHtml = "";
         if (hasChildren) {
@@ -453,6 +463,33 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         return block;
+    }
+
+    // Convert numeric grade code to friendly Korean grade name
+    function getFriendlyGrade(code) {
+        if (!code) return "";
+        const strCode = String(code).trim();
+        
+        switch (strCode) {
+            case "80": return "8급";
+            case "72": return "7급Ⅱ";
+            case "70": return "7급";
+            case "62": return "6급Ⅱ";
+            case "60": return "6급";
+            case "52": return "5급Ⅱ";
+            case "50": return "5급";
+            case "42": return "4급Ⅱ";
+            case "40": return "4급";
+            case "32": return "3급Ⅱ";
+            case "30": return "3급";
+            case "22": return "2급Ⅱ";
+            case "20": return "2급";
+            case "12": return "인명용";
+            case "10": return "1급";
+            case "02": return "Ⅱ급";
+            case "00": return "Ⅰ급";
+            default: return strCode;
+        }
     }
 
     function isKangxiRadical(char) {
@@ -505,21 +542,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Group by grade (lv)
+        // Group by grade (lv) using friendly Korean grade names
         const gradeGroups = {};
         filteredList.forEach(char => {
             const meta = hanjaDb[char];
             if (!meta) return;
             
-            const gr = meta.lv || "기타";
+            const gr = getFriendlyGrade(meta.lv) || "기타";
             if (!gradeGroups[gr]) gradeGroups[gr] = [];
             gradeGroups[gr].push(char);
         });
 
         // Sorted display by Korean Hanja Grade hierarchy (8급 to 특급)
         const gradeOrder = [
-            "8급", "준7급", "7급", "준6급", "6급", "준5급", "5급", "준4급", "4급",
-            "준3급", "3급", "준2급", "2급", "준1급", "1급", "II급", "I급", "특급"
+            "8급", "7급Ⅱ", "7급", "6급Ⅱ", "6급", "5급Ⅱ", "5급", "4급Ⅱ", "4급",
+            "3급Ⅱ", "3급", "2급Ⅱ", "2급", "인명용", "1급", "Ⅱ급", "Ⅰ급", "특급"
         ];
         
         // Gather any other grades not listed in typical order
