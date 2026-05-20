@@ -412,34 +412,60 @@ document.addEventListener("DOMContentLoaded", () => {
     function createLegoBlockNode(char, hasChildren = false) {
         const block = document.createElement("div");
         
-        const isRad = isKangxiRadical(char);
+        const currentHanjaRadical = activeSelectedChar && hanjaDb[activeSelectedChar] 
+            ? hanjaDb[activeSelectedChar].rd 
+            : "";
+            
+        const RADICAL_VARIANT_TO_ORIGINAL = {
+            "亻": "人", "氵": "水", "忄": "心", "扌": "手", "犭": "犬",
+            "礻": "示", "衤": "衣", "辶": "辵", "阝": "阜",
+            "艹": "艸", "刂": "刀", "⺈": "刀", "⺌": "小", "⺗": "心",
+            "⺘": "手", "⺧": "牛", "⺫": "网", "⺯": "肉", "⺲": "网",
+            "⺶": "羊", "⺾": "艸", "⻀": "艸", "⻄": "襾", "⻎": "辵",
+            "⺄": "乙", "⺸": "老", "⺻": "聿", "⺼": "肉"
+        };
+        
+        const normChar = RADICAL_VARIANT_TO_ORIGINAL[char] || char;
+        const normRad = RADICAL_VARIANT_TO_ORIGINAL[currentHanjaRadical] || currentHanjaRadical;
+        
+        const isRealRadical = currentHanjaRadical && (
+            char === currentHanjaRadical || 
+            normChar === normRad ||
+            (char === "阝" && (currentHanjaRadical === "阜" || currentHanjaRadical === "邑")) ||
+            (currentHanjaRadical === "阝" && (char === "阜" || char === "邑"))
+        );
+        
         const hasDb = !!hanjaDb[char];
         
-        // Determine type-class: type-radical for any radicals, type-hanja for non-radical database items, otherwise type-other
         let type = "other";
         let subText = "미분류";
         let fullTitle = "미분류";
         
-        if (isRad) {
-            type = "radical"; // 1.png style (teal neon styling) for all radicals
+        if (isRealRadical) {
+            type = "radical"; // Highlight ONLY the true radical of current active Hanja
             if (hasDb) {
                 const meta = hanjaDb[char];
                 const cleanMn = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
                 const friendlyGrade = getFriendlyGrade(meta.lv);
-                subText = `${cleanMn}(${friendlyGrade})`; // "나무 목(8급)" style
-                fullTitle = `${char}: ${cleanMn} (${friendlyGrade})`;
+                subText = `${cleanMn}(${friendlyGrade})`;
+                fullTitle = `${char}: ${cleanMn} (${friendlyGrade}) [부수]`;
             } else {
                 const radName = RADICAL_NAMES[char] || "부수";
-                subText = radName; // "사람 인" style
+                subText = radName;
                 fullTitle = `${char}: 부수 (${radName})`;
             }
         } else if (hasDb) {
-            type = "hanja"; // 2.png style (pink neon styling) for non-radical mapped characters
+            type = "hanja"; // Render non-radical components as standard pink bricks
             const meta = hanjaDb[char];
             const cleanMn = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
             const friendlyGrade = getFriendlyGrade(meta.lv);
-            subText = `${cleanMn}(${friendlyGrade})`; // "쓸 막(3급Ⅱ)" style
+            subText = `${cleanMn}(${friendlyGrade})`;
             fullTitle = `${char}: ${cleanMn} (${friendlyGrade})`;
+        } else if (isKangxiRadical(char)) {
+            type = "other"; // General radicals that are not active semantic radicals render in standard theme
+            const radName = RADICAL_NAMES[char] || "요소";
+            subText = radName;
+            fullTitle = `${char}: 일반 부품 (${radName})`;
         } else {
             fullTitle = `${char}: 미분류 요소`;
         }
@@ -479,28 +505,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // Convert numeric grade code to friendly Korean grade name
     function getFriendlyGrade(code) {
         if (!code) return "";
-        const strCode = String(code).trim();
+        const strCode = String(code).replace(/\s+/g, "").trim();
         
+        let result = strCode;
         switch (strCode) {
-            case "80": return "8급";
-            case "72": return "7급Ⅱ";
-            case "70": return "7급";
-            case "62": return "6급Ⅱ";
-            case "60": return "6급";
-            case "52": return "5급Ⅱ";
-            case "50": return "5급";
-            case "42": return "4급Ⅱ";
-            case "40": return "4급";
-            case "32": return "3급Ⅱ";
-            case "30": return "3급";
-            case "22": return "2급Ⅱ";
-            case "20": return "2급";
-            case "12": return "인명용";
-            case "10": return "1급";
-            case "02": return "Ⅱ급";
-            case "00": return "Ⅰ급";
-            default: return strCode;
+            case "80": result = "8급"; break;
+            case "72": result = "7급Ⅱ"; break;
+            case "70": result = "7급"; break;
+            case "62": result = "6급Ⅱ"; break;
+            case "60": result = "6급"; break;
+            case "52": result = "5급Ⅱ"; break;
+            case "50": result = "5급"; break;
+            case "42": result = "4급Ⅱ"; break;
+            case "40": result = "4급"; break;
+            case "32": result = "3급Ⅱ"; break;
+            case "30": result = "3급"; break;
+            case "22": result = "2급Ⅱ"; break;
+            case "20": result = "2급"; break;
+            case "12": result = "인명용"; break;
+            case "10": result = "1급"; break;
+            case "02": result = "Ⅱ급"; break;
+            case "01": result = "Ⅱ급"; break;
+            case "00": result = "Ⅰ급"; break;
         }
+        return result.replace(/\s+/g, "").trim();
     }
 
     // Comprehensive Korean Names mapping for Kangxi radicals and common variants
