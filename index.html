@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한자 구조 검색기</title>
     <meta name="description" content="한자를 구조별로 분해하고, 공통된 구성 요소 및 부수를 포함하는 연관 한자들을 쉽게 탐색할 수 있는 한자 검색기입니다.">
-    <!-- Google Fonts: Outfit & Noto Sans KR -->
+    <!-- Google Fonts: Outfit, Noto Sans KR & Noto Serif KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <!-- Tabler Icons (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <!-- Custom Style Sheet -->
@@ -22,7 +22,7 @@
         <!-- 네비게이션 헤더 -->
         <header class="main-header">
             <div class="header-logo">
-                <i class="ti ti-atom-2 logo-icon"></i>
+                <i class="ti ti-brush logo-icon"></i>
                 <h1>한자 <span class="accent-text">구조</span> 검색기</h1>
             </div>
             <div class="header-meta-info">
@@ -70,7 +70,7 @@
                     <div id="results-list" class="results-list scrollable">
                         <!-- 검색된 한자들이 카드 형태로 나열됨 -->
                         <div class="empty-state">
-                            <i class="ti ti-atom"></i>
+                            <i class="ti ti-brush"></i>
                             <p>한자, 한글 음, 혹은 부수 구성요소를 입력하여 한자를 탐색해보세요.</p>
                         </div>
                     </div>
@@ -82,11 +82,8 @@
                 
                 <!-- 기본 상태 (선택된 한자 없을 때) -->
                 <div id="viewer-empty-state" class="glass-card empty-viewer-card">
-                    <div class="neon-atom-container">
-                        <div class="orbit orbit-1"></div>
-                        <div class="orbit orbit-2"></div>
-                        <div class="orbit orbit-3"></div>
-                        <div class="nucleus"><i class="ti ti-atom-2"></i></div>
+                    <div class="calligraphy-icon-container">
+                        <i class="ti ti-brush logo-large"></i>
                     </div>
                     <h2>한자 상세 구조 뷰어</h2>
                     <p>좌측에서 한자를 검색하거나 선택하면,<br>해당 한자의 구조 분해와 공통된 요소를 포함하는 연관 한자들을 보여줍니다.</p>

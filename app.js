@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsCount.textContent = "0";
         resultsList.innerHTML = `
             <div class="empty-state">
-                <i class="ti ti-atom"></i>
+                <i class="ti ti-brush"></i>
                 <p>한자, 한글 음, 혹은 부수 구성요소를 입력하여 한자를 탐색해보세요.</p>
             </div>
         `;
@@ -630,7 +630,7 @@ document.addEventListener("DOMContentLoaded", () => {
             familyCount.textContent = "0";
             familyGridContainer.innerHTML = `
                 <div class="empty-state">
-                    <i class="ti ti-dna-2"></i>
+                    <i class="ti ti-hierarchy-2"></i>
                     <p>해당 요소를 포함하는 다른 배정한자가 없습니다.</p>
                 </div>
             `;
@@ -644,7 +644,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (filteredList.length === 0) {
             familyGridContainer.innerHTML = `
                 <div class="empty-state">
-                    <i class="ti ti-dna-2"></i>
+                    <i class="ti ti-hierarchy-2"></i>
                     <p>이 한자만이 유일하게 해당 요소를 포함하고 있습니다.</p>
                 </div>
             `;
@@ -684,7 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             groupDiv.innerHTML = `
                 <div class="family-level-title">
-                    <i class="ti ti-bookmark-glow"></i> 어문회 배정 한자 - ${grade} (${gradeGroups[grade].length}자)
+                    <i class="ti ti-bookmark"></i> 어문회 배정 한자 - ${grade} (${gradeGroups[grade].length}자)
                 </div>
             `;
             

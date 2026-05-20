@@ -1,38 +1,36 @@
 /* ==========================================================================
-   Hanja Molecule Finder CSS Style System
-   Design Paradigm: Premium Cybernetic Glassmorphism & Neon Navy Aesthetics
+   Hanja Structure Finder CSS Style System (Academic Light Edition)
+   Design Paradigm: Premium Minimalist Academic Paper & Calligraphic Aesthetics
    ========================================================================== */
 
 /* 1. Global Reset & Variables */
 :root {
-    --bg-dark-core: #070b13;
-    --bg-dark-gradient: linear-gradient(135deg, #070b13 0%, #0d1527 50%, #080d1a 100%);
-    --panel-glass: rgba(13, 21, 39, 0.6);
-    --panel-glass-hover: rgba(22, 34, 61, 0.7);
-    --border-glass: rgba(255, 255, 255, 0.07);
-    --border-glass-bright: rgba(255, 255, 255, 0.15);
+    /* Color Palette - Traditional Hanji Paper & Ink */
+    --bg-paper: #fbfaf7;           /* Warm-white hanji paper background */
+    --bg-paper-dark: #f5f3ec;      /* Darker paper tone for inner containers */
+    --bg-card: #ffffff;            /* Pure white for card elevation */
+    --border-light: rgba(0, 0, 0, 0.08); /* Minimalist border line */
+    --border-hover: rgba(30, 58, 138, 0.25); /* Focus accent border */
     
-    /* Neon Theme Colors */
-    --neon-blue: #00f0ff;
-    --neon-purple: #bd00ff;
-    --neon-pink: #ff007a;
-    --neon-green: #39ff14;
-    --neon-yellow: #ffdf00;
-    
-    /* Semantic Colors */
-    --text-primary: #f1f5f9;
-    --text-muted: #94a3b8;
+    /* Semantic Ink Colors */
+    --text-primary: #0f172a;       /* Charcoal Ink Black */
+    --text-muted: #475569;          /* Slate Gray Ink */
     --text-dark: #64748b;
     
-    /* Type Colors */
-    --color-hanja: #ff477e;
-    --color-radical: #00e5ff;
-    --color-other: #a855f7;
+    /* Academic Theme Accent Colors */
+    --accent-blue: #1e3a8a;        /* Royal Scholar Blue */
+    --accent-teal: #0d9488;        /* Soft Celadon Green */
     
-    /* Transition Definitions */
+    /* Hanja Component Semantic Coding (Traditional Ink Seals) */
+    --color-radical: #b91c1c;      /* 낙관 인중색 (Seal Vermilion Red) - semantic focus */
+    --color-hanja: #0f766e;        /* 쪽빛 청록색 (Indigo Teal) - standard components */
+    --color-other: #475569;        /* 일반 먹색 (Slate Gray) - other elements */
+    
+    /* Transition & Shadows */
     --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --glow-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+    --card-shadow-hover: 0 10px 30px -4px rgba(0, 0, 0, 0.06), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
 }
 
 * {
@@ -42,8 +40,8 @@
 }
 
 body {
-    background: var(--bg-dark-core);
-    background-image: var(--bg-dark-gradient);
+    background: var(--bg-paper);
+    background-image: linear-gradient(180deg, var(--bg-paper) 0%, var(--bg-paper-dark) 100%);
     color: var(--text-primary);
     font-family: 'Outfit', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
@@ -55,145 +53,31 @@ body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(7, 11, 19, 0.5);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 0 8px var(--neon-blue);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================================================
-   2. Preloader Animation Screen
-   ========================================================================== */
-.loader-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: var(--bg-dark-core);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.loader-container.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.loader-content {
-    text-align: center;
-    max-width: 450px;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.logo-neon {
-    font-size: 2.8rem;
-    font-weight: 800;
-    letter-spacing: 4px;
-    margin-bottom: 30px;
-    font-family: 'Outfit', sans-serif;
-    position: relative;
-}
-
-.logo-text {
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.logo-glow {
-    color: var(--neon-blue);
-    text-shadow: 0 0 15px var(--neon-blue), 0 0 30px rgba(0,240,255,0.4);
-    margin-left: 10px;
-}
-
-.spinner-outer {
-    width: 80px;
-    height: 80px;
-    border: 3px solid rgba(0, 240, 255, 0.05);
-    border-radius: 50%;
-    border-top-color: var(--neon-blue);
-    border-bottom-color: var(--neon-purple);
-    animation: spin 1.5s cubic-bezier(0.53, 0.21, 0.29, 0.87) infinite;
-    position: relative;
-    margin-bottom: 25px;
-}
-
-.spinner-inner {
-    width: 50px;
-    height: 50px;
-    border: 2px solid rgba(189, 0, 255, 0.05);
-    border-radius: 50%;
-    border-left-color: var(--neon-pink);
-    border-right-color: var(--neon-yellow);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: spin-reverse 1.2s linear infinite;
-}
-
-.loader-status {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
-    margin-bottom: 20px;
-    min-height: 24px;
-    transition: var(--transition-fast);
-}
-
-.progress-bar-container {
-    width: 300px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 2px;
-    overflow: hidden;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
-}
-
-.loader-progress {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
-    box-shadow: 0 0 8px var(--neon-blue);
-    transition: width 0.3s ease;
-    border-radius: 2px;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes spin-reverse {
-    to { transform: rotate(-360deg); }
-}
-
-/* ==========================================================================
-   3. Main App Layout & Header
+   2. Main App Layout & Header
    ========================================================================== */
 .app-layout {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    animation: fadeIn 0.8s ease-out;
+    animation: fadeIn 0.4s ease-out;
 }
 
 .hidden {
@@ -201,16 +85,16 @@ body {
 }
 
 .main-header {
-    background: rgba(7, 11, 19, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-glass);
-    padding: 15px 40px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-light);
+    padding: 12px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 
 .header-logo {
@@ -220,22 +104,19 @@ body {
 }
 
 .logo-icon {
-    font-size: 2.2rem;
-    color: var(--neon-blue);
-    text-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
-    animation: heartbeat 2s ease-in-out infinite;
+    font-size: 1.8rem;
+    color: var(--accent-blue);
 }
 
 .header-logo h1 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .accent-text {
-    background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--accent-blue);
+    font-weight: 800;
 }
 
 .header-meta-info {
@@ -246,32 +127,31 @@ body {
 
 .github-link {
     color: var(--text-muted);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     transition: var(--transition-fast);
 }
 
 .github-link:hover {
-    color: var(--neon-blue);
-    text-shadow: 0 0 10px var(--neon-blue);
+    color: var(--accent-blue);
 }
 
 /* ==========================================================================
-   4. Layout Structure (Flex/Grid)
+   3. Layout Structure (Flex/Grid)
    ========================================================================== */
 .main-content {
     flex: 1;
     display: grid;
-    grid-template-columns: 380px 1fr;
+    grid-template-columns: 360px 1fr;
     gap: 20px;
     padding: 20px 40px;
-    height: calc(100vh - 75px);
+    height: calc(100vh - 65px);
     overflow: hidden;
 }
 
 .sidebar-section {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
     height: 100%;
     overflow: hidden;
 }
@@ -283,22 +163,21 @@ body {
     overflow: hidden;
 }
 
-/* Glassmorphism Card Style */
+/* Minimalist Clean Card Style */
 .glass-card {
-    background: var(--panel-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 20px;
-    backdrop-filter: blur(12px) saturate(180%);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: var(--card-shadow);
     transition: var(--transition-smooth);
     display: flex;
     flex-direction: column;
 }
 
 .glass-card:hover {
-    border-color: rgba(0, 240, 255, 0.15);
-    box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 240, 255, 0.03);
+    border-color: var(--border-hover);
+    box-shadow: var(--card-shadow-hover);
 }
 
 .flex-grow {
@@ -306,13 +185,12 @@ body {
 }
 
 /* ==========================================================================
-   5. Sidebar - Search & History & Clustering UI
+   4. Sidebar - Search & History & Clustering UI
    ========================================================================== */
 .search-card {
-    padding: 16px;
-    background: rgba(17, 28, 52, 0.7);
-    border: 1px solid rgba(0, 240, 255, 0.15);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.05);
+    padding: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
 }
 
 .search-input-wrapper {
@@ -323,84 +201,84 @@ body {
 
 .search-icon {
     position: absolute;
-    left: 15px;
-    font-size: 1.25rem;
+    left: 14px;
+    font-size: 1.15rem;
     color: var(--text-muted);
 }
 
 #search-input {
     width: 100%;
-    background: rgba(7, 11, 19, 0.8);
-    border: 1px solid var(--border-glass);
-    border-radius: 12px;
-    padding: 14px 45px;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 12px 40px;
     font-family: inherit;
     font-size: 0.95rem;
-    color: #fff;
+    color: var(--text-primary);
     outline: none;
     transition: var(--transition-fast);
 }
 
 #search-input:focus {
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
-    background: rgba(0, 0, 0, 0.85);
+    border-color: var(--accent-blue);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.08);
 }
 
 .clear-btn {
     position: absolute;
-    right: 15px;
+    right: 14px;
     background: none;
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 4px;
     transition: var(--transition-fast);
 }
 
 .clear-btn:hover {
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .search-tip {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    margin-top: 8px;
+    margin-top: 6px;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
 }
 
 /* Recent Tag */
 .recent-card {
-    padding: 14px 18px;
+    padding: 12px 16px;
 }
 
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .card-header h3 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--text-primary);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .card-header h3 i {
-    color: var(--neon-purple);
+    color: var(--accent-blue);
 }
 
 .text-btn {
     background: none;
     border: none;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
     cursor: pointer;
     font-family: inherit;
@@ -408,31 +286,30 @@ body {
 }
 
 .text-btn:hover {
-    color: var(--neon-pink);
+    color: var(--color-radical);
     text-decoration: underline;
 }
 
 .tags-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
 }
 
 .recent-tag {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-glass);
-    border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 0.8rem;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 0.75rem;
     cursor: pointer;
     transition: var(--transition-fast);
 }
 
 .recent-tag:hover {
-    background: rgba(189, 0, 255, 0.15);
-    border-color: var(--neon-purple);
-    color: #fff;
-    box-shadow: 0 0 8px rgba(189, 0, 255, 0.2);
+    background: var(--bg-paper-dark);
+    border-color: var(--text-muted);
+    color: var(--text-primary);
 }
 
 /* Results & Clustering Tab */
@@ -442,71 +319,70 @@ body {
 }
 
 .results-header {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-}
-
-.results-header h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
     gap: 10px;
 }
 
+.results-header h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .results-header h3 i {
-    color: var(--neon-blue);
+    color: var(--accent-blue);
 }
 
 .count-badge {
-    background: rgba(0, 240, 255, 0.1);
-    color: var(--neon-blue);
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    border: 1px solid rgba(0, 240, 255, 0.2);
+    background: rgba(30, 58, 138, 0.06);
+    color: var(--accent-blue);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border: 1px solid rgba(30, 58, 138, 0.15);
 }
 
 .tab-bar {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     overflow-x: auto;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .tab-bar::-webkit-scrollbar {
-    height: 4px;
+    height: 3px;
 }
 
 .tab-btn {
     background: none;
     border: none;
     color: var(--text-muted);
-    font-size: 0.75rem;
-    padding: 6px 12px;
-    border-radius: 8px;
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: 6px;
     cursor: pointer;
     font-family: inherit;
-    font-weight: 600;
+    font-weight: 500;
     white-space: nowrap;
     transition: var(--transition-fast);
     border: 1px solid transparent;
 }
 
 .tab-btn:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    background: var(--bg-paper);
 }
 
 .tab-btn.active {
-    color: var(--neon-blue);
-    background: rgba(0, 240, 255, 0.08);
-    border-color: rgba(0, 240, 255, 0.25);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+    color: var(--accent-blue);
+    background: rgba(30, 58, 138, 0.06);
+    border-color: rgba(30, 58, 138, 0.15);
 }
 
 .results-list {
@@ -514,7 +390,7 @@ body {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     padding-right: 4px;
 }
 
@@ -524,28 +400,28 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: var(--text-dark);
+    color: var(--text-muted);
     text-align: center;
-    padding: 30px;
+    padding: 20px;
 }
 
 .empty-state i {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    opacity: 0.3;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
 }
 
 .empty-state p {
-    font-size: 0.85rem;
-    line-height: 1.6;
+    font-size: 0.8rem;
+    line-height: 1.5;
 }
 
 /* Hanja Result Row Card */
 .hanja-row-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-glass);
-    border-radius: 12px;
-    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 10px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -554,43 +430,42 @@ body {
 }
 
 .hanja-row-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(0, 240, 255, 0.25);
-    transform: translateX(4px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background: var(--bg-paper);
+    border-color: var(--text-muted);
+    transform: translateX(3px);
 }
 
 .hanja-row-card.active {
-    background: linear-gradient(90deg, rgba(0, 240, 255, 0.08) 0%, rgba(189, 0, 255, 0.08) 100%);
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+    background: rgba(30, 58, 138, 0.03);
+    border-color: var(--accent-blue);
 }
 
 .char-avatar {
-    font-size: 1.8rem;
+    font-family: 'Noto Serif KR', 'Nanum Myeongjo', serif;
+    font-size: 1.6rem;
     font-weight: 700;
-    min-width: 45px;
-    height: 45px;
-    background: rgba(7, 11, 19, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+    min-width: 40px;
+    height: 40px;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 14px;
-    color: #fff;
+    margin-right: 12px;
+    color: var(--text-primary);
     transition: var(--transition-fast);
 }
 
 .hanja-row-card:hover .char-avatar {
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
-    color: var(--neon-blue);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
 }
 
 .hanja-row-card.active .char-avatar {
-    border-color: var(--neon-blue);
-    color: var(--neon-blue);
+    border-color: var(--accent-blue);
+    background: var(--bg-card);
+    color: var(--accent-blue);
 }
 
 .row-left {
@@ -604,35 +479,35 @@ body {
 }
 
 .row-meaning-reading {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--text-primary);
 }
 
 .row-meta-sub {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    margin-top: 3px;
+    margin-top: 2px;
 }
 
 .row-right-badge {
-    font-size: 0.7rem;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-glass);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
     color: var(--text-muted);
 }
 
 .row-right-badge.level-badge {
-    background: rgba(189, 0, 255, 0.1);
-    color: #ca8aff;
-    border-color: rgba(189, 0, 255, 0.2);
+    background: rgba(13, 148, 136, 0.05);
+    color: var(--accent-teal);
+    border-color: rgba(13, 148, 136, 0.15);
 }
 
 /* ==========================================================================
-   6. Viewer Section
+   5. Viewer Section (Active & Empty States)
    ========================================================================== */
 .empty-viewer-card {
     flex-grow: 1;
@@ -641,79 +516,41 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 60px;
+    padding: 40px;
     color: var(--text-muted);
 }
 
+.calligraphy-icon-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-paper-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-light);
+}
+
+.logo-large {
+    font-size: 2.2rem;
+    color: var(--accent-blue);
+}
+
 .empty-viewer-card h2 {
-    color: #fff;
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin-top: 30px;
-    margin-bottom: 12px;
+    color: var(--text-primary);
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 8px;
 }
 
 .empty-viewer-card p {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    max-width: 450px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    max-width: 400px;
 }
 
-/* Orbit Animation */
-.neon-atom-container {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nucleus {
-    position: absolute;
-    font-size: 2.2rem;
-    color: var(--neon-blue);
-    text-shadow: 0 0 20px var(--neon-blue);
-    animation: scale-pulsate 2s ease-in-out infinite;
-}
-
-.orbit {
-    position: absolute;
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-radius: 50%;
-    animation: rotate 6s linear infinite;
-}
-
-.orbit-1 {
-    width: 120px;
-    height: 50px;
-    transform: rotate(30deg);
-}
-
-.orbit-2 {
-    width: 120px;
-    height: 50px;
-    transform: rotate(150deg);
-    animation-duration: 9s;
-}
-
-.orbit-3 {
-    width: 120px;
-    height: 50px;
-    transform: rotate(90deg);
-    animation-duration: 12s;
-}
-
-@keyframes rotate {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes scale-pulsate {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); text-shadow: 0 0 35px var(--neon-blue); }
-}
-
-/* Detailed Viewer Activated */
+/* Detailed Viewer Layout */
 .viewer-content-layout {
     display: flex;
     flex-direction: column;
@@ -724,7 +561,7 @@ body {
 
 .viewer-row {
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: 320px 1fr;
     gap: 20px;
     max-height: 48%;
 }
@@ -733,88 +570,76 @@ body {
 .profile-card {
     justify-content: center;
     align-items: center;
-    padding: 30px 20px;
-    background: linear-gradient(135deg, rgba(13, 21, 39, 0.6) 0%, rgba(22, 34, 61, 0.5) 100%);
+    padding: 24px 18px;
+    background: var(--bg-card);
 }
 
 .profile-main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     text-align: center;
+    width: 100%;
 }
 
 .huge-char-glow {
-    width: 130px;
-    height: 130px;
-    background: rgba(7, 11, 19, 0.8);
-    border: 2px solid rgba(0, 240, 255, 0.2);
-    border-radius: 24px;
+    width: 110px;
+    height: 110px;
+    background: var(--bg-paper);
+    border: 1.5px solid var(--border-light);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: inset 0 0 20px rgba(0,240,255,0.1), 0 10px 25px rgba(0,0,0,0.4);
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
     transition: var(--transition-smooth);
 }
 
-.huge-char-glow::after {
-    content: '';
-    position: absolute;
-    inset: -5px;
-    border-radius: 29px;
-    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-    z-index: -1;
-    opacity: 0.15;
-    filter: blur(10px);
-}
-
 .huge-char {
-    font-size: 5rem;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(255,255,255,0.2);
+    font-family: 'Noto Serif KR', 'Nanum Myeongjo', serif;
+    font-size: 4.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
     line-height: 1;
 }
 
 .profile-card:hover .huge-char-glow {
-    border-color: var(--neon-blue);
-    transform: scale(1.05);
-    box-shadow: inset 0 0 25px rgba(0,240,255,0.25), 0 15px 35px rgba(0,0,0,0.5), 0 0 20px rgba(0, 240, 255, 0.2);
+    border-color: var(--accent-blue);
+    transform: scale(1.02);
 }
 
 .profile-meta h2 {
-    font-size: 1.6rem;
-    font-weight: 800;
-    margin-bottom: 12px;
-    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-primary);
 }
 
 .badge-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
-    min-width: 180px;
 }
 
 .badge-item {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-glass);
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 0.8rem;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.78rem;
     color: var(--text-muted);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     text-align: left;
 }
 
 .badge-item i {
-    color: var(--neon-blue);
-    font-size: 1rem;
+    color: var(--accent-blue);
+    font-size: 0.9rem;
 }
 
 /* Decomposition View */
@@ -823,53 +648,50 @@ body {
 }
 
 .ids-tip-banner {
-    background: rgba(0, 240, 255, 0.06);
-    border: 1px solid rgba(0, 240, 255, 0.15);
-    border-left: 4px solid var(--neon-blue);
-    border-radius: 10px;
-    padding: 14px 20px;
-    margin: 12px 0 18px 0;
-    font-size: 1.05rem;
+    background: rgba(30, 58, 138, 0.03);
+    border: 1px solid rgba(30, 58, 138, 0.08);
+    border-left: 4px solid var(--accent-blue);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 8px 0 14px 0;
+    font-size: 0.85rem;
     color: var(--text-primary);
     display: flex;
     align-items: center;
-    gap: 14px;
-    line-height: 1.6;
-    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.05);
+    gap: 10px;
+    line-height: 1.5;
 }
 
 .ids-tip-banner i {
-    color: var(--neon-blue);
-    font-size: 1.4rem;
-    text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+    color: var(--accent-blue);
+    font-size: 1.1rem;
     flex-shrink: 0;
 }
 
 .ids-tip-banner strong {
-    color: var(--neon-yellow);
-    text-shadow: 0 0 10px rgba(255, 223, 0, 0.4);
-    font-weight: 800;
+    color: var(--color-radical);
+    font-weight: 700;
 }
 
 .empty-state-tip {
-    margin-top: 35px;
-    max-width: 580px;
+    margin-top: 25px;
+    max-width: 520px;
     text-align: left;
 }
 
 .card-subtitle {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
 .tree-viewport {
     flex-grow: 1;
     overflow: auto;
-    background: rgba(7, 11, 19, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    padding: 20px;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 24px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -878,7 +700,7 @@ body {
 }
 
 /* ==========================================================================
-   7. LEGO block decomposition tree rendering (CSS Tree Nodes)
+   6. LEGO block decomposition tree rendering (CSS Tree Nodes)
    ========================================================================== */
 .ids-tree-wrapper {
     display: flex;
@@ -893,100 +715,95 @@ body {
     position: relative;
 }
 
-/* Lego style UI Block */
+/* Lego style UI Block (Minimalist academic design) */
 .lego-block {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1.5px solid var(--border-glass-bright);
-    border-radius: 10px;
-    padding: 8px 16px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-light);
+    border-radius: 8px;
+    padding: 6px 12px;
     cursor: pointer;
     font-family: inherit;
     transition: var(--transition-fast);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.05);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
     z-index: 10;
-    min-width: 60px;
+    min-width: 54px;
     text-align: center;
 }
 
 .lego-block:hover {
-    transform: translateY(-2px);
-    border-color: #fff;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.1);
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .lego-char {
-    font-size: 1.4rem;
+    font-family: 'Noto Serif KR', 'Nanum Myeongjo', serif;
+    font-size: 1.3rem;
     font-weight: 700;
-    color: #fff;
     line-height: 1.2;
 }
 
 .lego-desc {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     color: var(--text-muted);
-    margin-top: 2px;
+    margin-top: 1px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 90px;
+    max-width: 80px;
     text-align: center;
 }
 
-/* Lego Colors by Type */
+/* Lego Colors by Type (Ink Seal inspired coding) */
 .lego-block.type-hanja {
-    background: linear-gradient(180deg, rgba(255, 71, 126, 0.25) 0%, rgba(255, 71, 126, 0.08) 100%);
-    border-color: rgba(255, 71, 126, 0.4);
-    box-shadow: 0 4px 10px rgba(255, 71, 126, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: #f0fdfa; /* Soft Teal/Celadon */
+    border-color: rgba(13, 148, 136, 0.3);
 }
 .lego-block.type-hanja:hover {
     border-color: var(--color-hanja);
-    box-shadow: 0 6px 15px rgba(255, 71, 126, 0.25), 0 0 10px var(--color-hanja);
 }
 .lego-block.type-hanja .lego-char {
-    color: #ff8fa3;
+    color: var(--color-hanja);
 }
 
 .lego-block.type-radical {
-    background: linear-gradient(180deg, rgba(0, 229, 255, 0.25) 0%, rgba(0, 229, 255, 0.08) 100%);
-    border-color: rgba(0, 229, 255, 0.4);
-    box-shadow: 0 4px 10px rgba(0, 229, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: #fef2f2; /* Soft vermilion clay */
+    border-color: rgba(220, 38, 38, 0.25);
+    border-width: 2px;
 }
 .lego-block.type-radical:hover {
     border-color: var(--color-radical);
-    box-shadow: 0 6px 15px rgba(0, 229, 255, 0.25), 0 0 10px var(--color-radical);
 }
 .lego-block.type-radical .lego-char {
-    color: #8ef7ff;
+    color: var(--color-radical);
 }
 
 .lego-block.type-other {
-    background: linear-gradient(180deg, rgba(168, 85, 247, 0.25) 0%, rgba(168, 85, 247, 0.08) 100%);
-    border-color: rgba(168, 85, 247, 0.4);
-    box-shadow: 0 4px 10px rgba(168, 85, 247, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: var(--bg-paper);
+    border-color: var(--border-light);
 }
 .lego-block.type-other:hover {
-    border-color: var(--color-other);
-    box-shadow: 0 6px 15px rgba(168, 85, 247, 0.25), 0 0 10px var(--color-other);
+    border-color: var(--text-muted);
 }
 .lego-block.type-other .lego-char {
-    color: #e9d5ff;
+    color: var(--text-primary);
 }
 
 /* Operator blocks (⿱, ⿰, etc.) */
 .lego-block.type-op {
-    background: rgba(7, 11, 19, 0.9);
+    background: var(--bg-card);
     border: 1px dashed var(--text-dark);
-    padding: 4px 8px;
-    min-width: 32px;
-    border-radius: 6px;
+    padding: 3px 6px;
+    min-width: 28px;
+    border-radius: 4px;
     box-shadow: none;
 }
 .lego-block.type-op .lego-char {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
+    font-family: inherit;
 }
 .lego-block.type-op:hover {
     border-color: var(--text-muted);
@@ -994,14 +811,14 @@ body {
     box-shadow: none;
 }
 
-/* Tree connection lines */
+/* Tree connection lines (Tufte style - minimal ink) */
 .ids-tree-children {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     position: relative;
-    padding-top: 20px;
-    gap: 20px;
+    padding-top: 18px;
+    gap: 16px;
     width: 100%;
 }
 
@@ -1010,9 +827,9 @@ body {
     position: absolute;
     top: 0;
     left: 50%;
-    width: 2px;
-    height: 20px;
-    background: var(--text-dark);
+    width: 1.5px;
+    height: 18px;
+    background: #cbd5e1;
     transform: translateX(-50%);
 }
 
@@ -1022,8 +839,8 @@ body {
     top: 0;
     left: 0;
     width: 50%;
-    height: 20px;
-    border-top: 2px solid var(--text-dark);
+    height: 18px;
+    border-top: 1.5px solid #cbd5e1;
 }
 
 .ids-tree-node::after {
@@ -1032,8 +849,8 @@ body {
     top: 0;
     right: 0;
     width: 50%;
-    height: 20px;
-    border-top: 2px solid var(--text-dark);
+    height: 18px;
+    border-top: 1.5px solid #cbd5e1;
 }
 
 .ids-tree-node:first-child::before,
@@ -1051,7 +868,7 @@ body {
 }
 
 /* ==========================================================================
-   8. Family Grid & Filters (Genetic Relatives)
+   7. Family Grid & Filters (Genetic Relatives)
    ========================================================================== */
 .family-card {
     overflow: hidden;
@@ -1061,49 +878,48 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 15px;
-    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .styled-select {
-    background: rgba(7, 11, 19, 0.85);
-    border: 1px solid var(--border-glass);
-    color: #fff;
-    border-radius: 8px;
-    padding: 6px 12px;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 4px 10px;
     outline: none;
     font-family: inherit;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     cursor: pointer;
     transition: var(--transition-fast);
 }
 
 .styled-select:focus {
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+    border-color: var(--accent-blue);
 }
 
 .component-selector-wrapper {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
+    gap: 6px;
+    font-size: 0.78rem;
     color: var(--text-muted);
 }
 
 .family-stats-bar {
-    background: rgba(0, 240, 255, 0.03);
-    border: 1px solid rgba(0, 240, 255, 0.08);
-    border-radius: 8px;
-    padding: 6px 14px;
-    margin-bottom: 15px;
-    font-size: 0.75rem;
+    background: rgba(30, 58, 138, 0.02);
+    border: 1px solid rgba(30, 58, 138, 0.06);
+    border-radius: 6px;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+    font-size: 0.72rem;
     color: var(--text-muted);
 }
 
 .family-stats-bar strong {
-    color: var(--neon-blue);
+    color: var(--accent-blue);
 }
 
 .family-grid {
@@ -1111,68 +927,67 @@ body {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     padding-right: 5px;
 }
 
 .family-level-group {
-    border: 1px solid rgba(255, 255, 255, 0.02);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.01);
-    padding: 14px;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    background: var(--bg-paper);
+    padding: 12px;
 }
 
 .family-level-title {
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: var(--neon-purple);
-    margin-bottom: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
-    padding-bottom: 6px;
-    letter-spacing: 0.5px;
+    gap: 6px;
+    border-bottom: 1px dashed var(--border-light);
+    padding-bottom: 4px;
 }
 
 .family-grid-cells {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 8px;
 }
 
 /* Relative Small Hanja Card */
 .family-cell-card {
-    background: rgba(7, 11, 19, 0.6);
-    border: 1px solid var(--border-glass);
-    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px 5px;
+    padding: 8px 4px;
     cursor: pointer;
     transition: var(--transition-fast);
     aspect-ratio: 1;
 }
 
 .family-cell-card:hover {
-    background: rgba(0, 240, 255, 0.05);
-    border-color: rgba(0, 240, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    background: var(--bg-paper);
+    border-color: var(--text-muted);
+    transform: translateY(-1.5px);
 }
 
 .family-cell-char {
-    font-size: 1.3rem;
+    font-family: 'Noto Serif KR', 'Nanum Myeongjo', serif;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .family-cell-reading {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     color: var(--text-muted);
-    margin-top: 2px;
+    margin-top: 1px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1180,48 +995,43 @@ body {
 }
 
 .family-cell-card:hover .family-cell-char {
-    color: var(--neon-blue);
+    color: var(--accent-blue);
 }
 
 /* ==========================================================================
-   9. Footer & Utilities
+   8. Footer & Utilities
    ========================================================================== */
 .main-footer {
-    background: rgba(7, 11, 19, 0.95);
-    border-top: 1px solid var(--border-glass);
-    padding: 15px 40px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-light);
+    padding: 12px 40px;
     text-align: center;
-    font-size: 0.75rem;
-    color: var(--text-dark);
+    font-size: 0.72rem;
+    color: var(--text-muted);
 }
 
-/* Neon badges */
+/* Badges */
 .badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
     font-weight: 700;
     border: 1px solid transparent;
 }
 
 .badge.neon-blue {
-    background: rgba(0, 240, 255, 0.08);
-    color: var(--neon-blue);
-    border-color: rgba(0, 240, 255, 0.2);
+    background: rgba(30, 58, 138, 0.05);
+    color: var(--accent-blue);
+    border-color: rgba(30, 58, 138, 0.15);
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
 }
 
 .scrollable {
@@ -1229,11 +1039,11 @@ body {
 }
 
 /* ==========================================================================
-   10. Responsive Breakpoints
+   9. Responsive Breakpoints
    ========================================================================== */
 @media (max-width: 1200px) {
     .main-content {
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 300px 1fr;
         padding: 15px 20px;
     }
     .viewer-row {
@@ -1270,13 +1080,13 @@ body {
         padding: 12px 16px;
     }
 
-    /* 모바일: 한자 분해 트리 */
+    /* Mobile Tree Viewport */
     .decomposition-card {
         height: auto !important;
-        min-height: 260px;
+        min-height: 240px;
     }
     .tree-viewport {
-        min-height: 220px;
+        min-height: 200px;
         padding: 16px 10px;
         align-items: flex-start;
         overflow-x: auto;
@@ -1287,106 +1097,104 @@ body {
         padding-bottom: 8px;
     }
     .ids-tree-children {
-        gap: 12px;
-        padding-top: 16px;
+        gap: 10px;
+        padding-top: 14px;
     }
     .ids-tree-children::before {
-        height: 16px;
+        height: 14px;
     }
     .ids-tree-node::before,
     .ids-tree-node::after {
-        height: 16px;
+        height: 14px;
     }
     .lego-block {
-        padding: 6px 10px;
-        min-width: 48px;
+        padding: 5px 8px;
+        min-width: 44px;
     }
     .lego-char {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
     }
     .lego-desc {
-        font-size: 0.6rem;
-        max-width: 70px;
+        font-size: 0.58rem;
+        max-width: 64px;
     }
     .lego-block.has-children {
-        padding-bottom: 24px !important;
+        padding-bottom: 20px !important;
     }
 
-    /* 모바일: 뷰어 레이아웃 */
+    /* Mobile Viewer Layout */
     .viewer-row {
         grid-template-columns: 100%;
         max-height: none;
         overflow: visible;
     }
     .profile-card {
-        padding: 20px 16px;
+        padding: 16px 12px;
     }
     .huge-char {
-        font-size: 3.8rem;
+        font-size: 3.4rem;
     }
     .huge-char-glow {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
 
-    /* 모바일: 공통 요소 컴포넌트 */
+    /* Mobile Common Grid */
     .flex-row-between {
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 6px;
     }
     .component-selector-wrapper {
         flex-wrap: wrap;
     }
     .family-card {
         height: auto !important;
-        min-height: 300px;
+        min-height: 280px;
     }
 }
 
-/* Premium Vowel Length Badges */
+/* Vowel Length Badges (Ink Themed Accent) */
 .badge-item.vowel-long {
-    background: rgba(255, 179, 0, 0.08) !important;
-    border-color: rgba(255, 179, 0, 0.25) !important;
-    color: #ffc107 !important;
-    box-shadow: 0 0 10px rgba(255, 179, 0, 0.15);
+    background: #fffbeb !important;
+    border-color: rgba(217, 119, 6, 0.25) !important;
+    color: #b45309 !important;
 }
 .badge-item.vowel-long i {
-    color: #ffc107 !important;
+    color: #d97706 !important;
 }
 
 .badge-item.vowel-short {
-    background: rgba(0, 240, 255, 0.05) !important;
-    border-color: rgba(0, 240, 255, 0.15) !important;
-    color: #8ef7ff !important;
+    background: rgba(30, 58, 138, 0.02) !important;
+    border-color: rgba(30, 58, 138, 0.1) !important;
+    color: var(--text-muted) !important;
 }
 .badge-item.vowel-short i {
-    color: #00f0ff !important;
+    color: var(--accent-blue) !important;
 }
 
 /* Premium Vowel Mark Character Beside Huge Character */
 .vowel-mark-char {
     font-size: 2.2rem;
-    color: var(--neon-yellow);
+    color: var(--color-radical);
     vertical-align: middle;
-    margin-left: 4px;
-    font-weight: 800;
-    text-shadow: 0 0 10px rgba(255, 223, 0, 0.5), 0 0 20px rgba(255, 223, 0, 0.2);
+    margin-left: 2px;
+    font-weight: 700;
     display: inline-block;
-    transform: translateY(-0.15em);
+    transform: translateY(-0.1em);
     user-select: none;
 }
 
 /* ==========================================================================
-   11. Collapsible Interactive Lego Tree Additions
+   10. Collapsible Interactive Lego Tree Additions
    ========================================================================== */
 
 /* Collapsible children container */
 .ids-tree-children.collapsible {
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.4s ease;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, padding 0.3s ease;
     max-height: 1200px;
     opacity: 1;
     overflow: visible;
-    padding-top: 20px;
+    padding-top: 18px;
 }
 
 .ids-tree-children.collapsible.collapsed {
@@ -1400,54 +1208,47 @@ body {
 /* Expand button inside lego block */
 .lego-block.has-children {
     position: relative;
-    padding-bottom: 26px !important; /* Extra padding to avoid overlaying label */
+    padding-bottom: 22px !important; /* Extra padding to avoid overlaying label */
 }
 
 .lego-expand-btn {
     position: absolute;
-    bottom: -11px;
+    bottom: -9px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(7, 11, 19, 0.95);
-    border: 1px solid var(--border-glass-bright);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
     border-radius: 50%;
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: var(--text-muted);
     transition: var(--transition-fast);
     z-index: 15;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .lego-block.has-children:hover .lego-expand-btn {
-    border-color: #fff;
-    color: #fff;
+    border-color: var(--text-muted);
+    color: var(--text-primary);
 }
 
 .lego-expand-btn:hover {
-    background: rgba(0, 240, 255, 0.2) !important;
-    border-color: var(--neon-blue) !important;
-    color: #fff !important;
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    background: var(--bg-paper-dark) !important;
+    color: var(--text-primary) !important;
     transform: translateX(-50%) scale(1.1);
 }
 
 /* Active status when expanded */
 .lego-block.has-children.is-expanded {
-    border-color: var(--neon-blue) !important;
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border-color: var(--accent-blue) !important;
 }
 
 .lego-block.has-children.is-expanded .lego-expand-btn {
-    background: rgba(189, 0, 255, 0.25) !important;
-    border-color: var(--neon-purple) !important;
-    color: #ca8aff !important;
+    background: var(--bg-paper-dark) !important;
+    color: var(--accent-blue) !important;
 }
-
-
-
