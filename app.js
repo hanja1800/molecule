@@ -331,18 +331,65 @@ document.addEventListener("DOMContentLoaded", () => {
         const nodeDiv = document.createElement("div");
         nodeDiv.className = "ids-tree-node";
         
-        // If it represents an IDC Operator or anonymous sequence
-        if (node.tp && !node.c) {
+        const hasChildren = node.ch && node.ch.length > 0;
+        
+        // Scenario 1: Decomposable component that retains its character (node.c AND hasChildren)
+        if (node.c && hasChildren) {
+            const leafBlock = createLegoBlockNode(node.c, true);
+            nodeDiv.appendChild(leafBlock);
+            
+            // Render the children container (collapsed by default)
+            const childrenDiv = document.createElement("div");
+            childrenDiv.className = "ids-tree-children collapsible collapsed";
+            
+            // If the decomposition operator is present, show it as a sub-operator node
+            if (node.tp) {
+                const opBlock = document.createElement("div");
+                opBlock.className = "lego-block type-op";
+                const opLabel = node.tp === "SQ" ? "SEQ" : (node.tp === "CY" ? "CYCLE" : node.tp);
+                opBlock.innerHTML = `<span class="lego-char">${opLabel}</span>`;
+                
+                const opNode = document.createElement("div");
+                opNode.className = "ids-tree-node";
+                opNode.appendChild(opBlock);
+                
+                const opChildrenDiv = document.createElement("div");
+                opChildrenDiv.className = "ids-tree-children";
+                
+                node.ch.forEach(child => {
+                    opChildrenDiv.appendChild(buildLegoHtmlTree(child));
+                });
+                opNode.appendChild(opChildrenDiv);
+                childrenDiv.appendChild(opNode);
+            } else {
+                node.ch.forEach(child => {
+                    childrenDiv.appendChild(buildLegoHtmlTree(child));
+                });
+            }
+            
+            nodeDiv.appendChild(childrenDiv);
+            
+            // Attach toggle behavior to the expand button
+            const expandBtn = leafBlock.querySelector(".lego-expand-btn");
+            if (expandBtn) {
+                expandBtn.addEventListener("click", (e) => {
+                    e.stopPropagation(); // Prevents main navigation click
+                    const isCollapsed = childrenDiv.classList.toggle("collapsed");
+                    expandBtn.innerHTML = isCollapsed ? '<i class="ti ti-plus"></i>' : '<i class="ti ti-minus"></i>';
+                    leafBlock.classList.toggle("is-expanded", !isCollapsed);
+                });
+            }
+        }
+        // Scenario 2: Standard IDC Operator or anonymous sequence (node.tp AND no node.c)
+        else if (node.tp && !node.c) {
             const opBlock = document.createElement("div");
             opBlock.className = "lego-block type-op";
             
-            // Map common IDC tags to friendly labels or keep the symbol
             const opLabel = node.tp === "SQ" ? "SEQ" : (node.tp === "CY" ? "CYCLE" : node.tp);
             opBlock.innerHTML = `<span class="lego-char">${opLabel}</span>`;
             nodeDiv.appendChild(opBlock);
             
-            // Recurse children
-            if (node.ch && node.ch.length > 0) {
+            if (hasChildren) {
                 const childrenDiv = document.createElement("div");
                 childrenDiv.className = "ids-tree-children";
                 
@@ -353,16 +400,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 nodeDiv.appendChild(childrenDiv);
             }
         } 
-        // Leaf Node
+        // Scenario 3: Standard Leaf Node (no children)
         else if (node.c) {
-            const leafBlock = createLegoBlockNode(node.c);
+            const leafBlock = createLegoBlockNode(node.c, false);
             nodeDiv.appendChild(leafBlock);
         }
         
         return nodeDiv;
     }
 
-    function createLegoBlockNode(char) {
+    function createLegoBlockNode(char, hasChildren = false) {
         const block = document.createElement("div");
         
         // Find classification using obfuscated types (hj, rc, ot)
@@ -378,10 +425,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         // Bind correct CSS types: type-hanja, type-radical, type-other
-        block.className = `lego-block type-${type}`;
+        block.className = `lego-block type-${type}${hasChildren ? " has-children" : ""}`;
+        
+        let expandHtml = "";
+        if (hasChildren) {
+            expandHtml = `<span class="lego-expand-btn" title="자세히 분해하기"><i class="ti ti-plus"></i></span>`;
+        }
+        
         block.innerHTML = `
             <span class="lego-char">${char}</span>
             <span class="lego-desc">${subText}</span>
+            ${expandHtml}
         `;
         
         // Add Navigation click event

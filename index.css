@@ -1263,4 +1263,78 @@ body {
     user-select: none;
 }
 
+/* ==========================================================================
+   11. Collapsible Interactive Lego Tree Additions
+   ========================================================================== */
+
+/* Collapsible children container */
+.ids-tree-children.collapsible {
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.4s ease;
+    max-height: 1200px;
+    opacity: 1;
+    overflow: visible;
+    padding-top: 20px;
+}
+
+.ids-tree-children.collapsible.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Expand button inside lego block */
+.lego-block.has-children {
+    position: relative;
+    padding-bottom: 26px !important; /* Extra padding to avoid overlaying label */
+}
+
+.lego-expand-btn {
+    position: absolute;
+    bottom: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(7, 11, 19, 0.95);
+    border: 1px solid var(--border-glass-bright);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+    z-index: 15;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.lego-block.has-children:hover .lego-expand-btn {
+    border-color: #fff;
+    color: #fff;
+}
+
+.lego-expand-btn:hover {
+    background: rgba(0, 240, 255, 0.2) !important;
+    border-color: var(--neon-blue) !important;
+    color: #fff !important;
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    transform: translateX(-50%) scale(1.1);
+}
+
+/* Active status when expanded */
+.lego-block.has-children.is-expanded {
+    border-color: var(--neon-blue) !important;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.lego-block.has-children.is-expanded .lego-expand-btn {
+    background: rgba(189, 0, 255, 0.25) !important;
+    border-color: var(--neon-purple) !important;
+    color: #ca8aff !important;
+}
+
+
 
