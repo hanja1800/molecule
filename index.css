@@ -500,10 +500,37 @@ body {
     color: var(--text-muted);
 }
 
+/* 피드백 #8: 급수 배지 — 서열(ordinal) 데이터는 색상 농도로 차등 표현 */
+/* 기초급(8~7): 연한 초록 / 중급(6~4): 청록 / 고급(3~2): 청색 / 최고급(1~특급): 남색 */
 .row-right-badge.level-badge {
     background: rgba(13, 148, 136, 0.05);
     color: var(--accent-teal);
     border-color: rgba(13, 148, 136, 0.15);
+}
+/* 기초급 8~7급: soft green */
+.row-right-badge.grade-basic {
+    background: rgba(34, 197, 94, 0.08);
+    color: #15803d;
+    border-color: rgba(34, 197, 94, 0.25);
+}
+/* 중급 6~4급: teal (기본) */
+.row-right-badge.grade-mid {
+    background: rgba(13, 148, 136, 0.08);
+    color: var(--accent-teal);
+    border-color: rgba(13, 148, 136, 0.25);
+}
+/* 상급 3~2급: royal blue */
+.row-right-badge.grade-high {
+    background: rgba(37, 99, 235, 0.08);
+    color: #1d4ed8;
+    border-color: rgba(37, 99, 235, 0.25);
+}
+/* 최고급 1급 이하: deep indigo */
+.row-right-badge.grade-elite {
+    background: rgba(67, 56, 202, 0.1);
+    color: #4338ca;
+    border-color: rgba(67, 56, 202, 0.3);
+    font-weight: 800;
 }
 
 /* ==========================================================================
@@ -563,7 +590,9 @@ body {
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 20px;
-    max-height: 48%;
+    /* 피드백 #5: 48% 고정 제거 → 트리 깊이에 따라 자연스럽게 확장 */
+    min-height: 0;
+    flex-shrink: 0;
 }
 
 /* Profile Card */
@@ -605,9 +634,9 @@ body {
     line-height: 1;
 }
 
+/* 피드백 #6: profile-card scale 호버 제거 — 시각적 잡음 감소 */
 .profile-card:hover .huge-char-glow {
     border-color: var(--accent-blue);
-    transform: scale(1.02);
 }
 
 .profile-meta h2 {
@@ -745,8 +774,9 @@ body {
     line-height: 1.2;
 }
 
+/* 피드백 #2: lego-desc 0.62rem(~10px) → 0.75rem(12px) — WCAG 최소 기준 충족 */
 .lego-desc {
-    font-size: 0.62rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
     margin-top: 1px;
     white-space: nowrap;
@@ -791,22 +821,25 @@ body {
     color: var(--text-primary);
 }
 
-/* Operator blocks (⿱, ⿰, etc.) */
+/* 피드백 #4: type-op 연산자 블록 시각화 개선 */
+/* IDS 구조 연산자(⿱ ⿰ 등)가 앱의 핵심 정보이므로 색상/강조 강화 */
 .lego-block.type-op {
-    background: var(--bg-card);
-    border: 1px dashed var(--text-dark);
-    padding: 3px 6px;
-    min-width: 28px;
-    border-radius: 4px;
+    background: rgba(30, 58, 138, 0.05);
+    border: 1.5px solid rgba(30, 58, 138, 0.35);
+    padding: 4px 8px;
+    min-width: 36px;
+    border-radius: 6px;
     box-shadow: none;
 }
 .lego-block.type-op .lego-char {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    font-size: 1.05rem;
+    color: var(--accent-blue);
     font-family: inherit;
+    font-weight: 700;
 }
 .lego-block.type-op:hover {
-    border-color: var(--text-muted);
+    border-color: var(--accent-blue);
+    background: rgba(30, 58, 138, 0.09);
     transform: none;
     box-shadow: none;
 }
@@ -822,14 +855,15 @@ body {
     width: 100%;
 }
 
+/* 피드백 #3: 트리 연결선 #cbd5e1(대비 ~2.5:1) → #94a3b8(대비 ~4.5:1) */
 .ids-tree-children::before {
     content: '';
     position: absolute;
     top: 0;
     left: 50%;
-    width: 1.5px;
+    width: 2px;
     height: 18px;
-    background: #cbd5e1;
+    background: #94a3b8;
     transform: translateX(-50%);
 }
 
@@ -840,7 +874,7 @@ body {
     left: 0;
     width: 50%;
     height: 18px;
-    border-top: 1.5px solid #cbd5e1;
+    border-top: 2px solid #94a3b8;
 }
 
 .ids-tree-node::after {
@@ -850,7 +884,7 @@ body {
     right: 0;
     width: 50%;
     height: 18px;
-    border-top: 1.5px solid #cbd5e1;
+    border-top: 2px solid #94a3b8;
 }
 
 .ids-tree-node:first-child::before,
@@ -950,9 +984,10 @@ body {
     padding-bottom: 4px;
 }
 
+/* family-cell-char 크기 증가에 맞춰 최소 셀 너비도 확장 */
 .family-grid-cells {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
     gap: 8px;
 }
 
@@ -965,10 +1000,11 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8px 4px;
+    padding: 10px 6px;
     cursor: pointer;
     transition: var(--transition-fast);
     aspect-ratio: 1;
+    min-width: 76px;
 }
 
 .family-cell-card:hover {
@@ -977,17 +1013,19 @@ body {
     transform: translateY(-1.5px);
 }
 
+/* 피드백 #1: family-cell-char 1.25rem(20px) → 1.75rem(28px) — 복잡 한자 획 가독성 확보 */
 .family-cell-char {
     font-family: 'Noto Serif KR', 'Nanum Myeongjo', serif;
-    font-size: 1.25rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: var(--text-primary);
 }
 
+/* 피드백 #2: family-cell-reading 0.62rem(~10px) → 0.75rem(12px) — WCAG 가독성 기준 */
 .family-cell-reading {
-    font-size: 0.62rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
-    margin-top: 1px;
+    margin-top: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

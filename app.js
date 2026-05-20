@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span class="row-meta-sub">부수: ${meta.rd} | ${meta.s2}획</span>
                     </div>
                 </div>
-                <div class="row-right-badge level-badge">${getFriendlyGrade(meta.lv)}</div>
+                <div class="row-right-badge ${getGradeClass(meta.lv)}">${getFriendlyGrade(meta.lv)}</div>
             `;
             
             card.addEventListener("click", () => {
@@ -533,6 +533,19 @@ document.addEventListener("DOMContentLoaded", () => {
             case "00": result = "Ⅰ급"; break;
         }
         return result.replace(/\s+/g, "").trim();
+    }
+
+    // 피드백 #8: 서열(ordinal) 급수 데이터를 4단계 색상 클래스로 매핑
+    // 기초급(8~7): grade-basic(초록) / 중급(6~4): grade-mid(청록) /
+    // 고급(3~2): grade-high(파랑) / 최고급(1급~특급): grade-elite(남색)
+    function getGradeClass(code) {
+        if (!code) return "level-badge";
+        const strCode = String(code).replace(/\s+/g, "").trim();
+        const num = parseInt(strCode, 10);
+        if (num >= 70) return "level-badge grade-basic";  // 8급, 7급Ⅱ, 7급
+        if (num >= 40) return "level-badge grade-mid";    // 6급Ⅱ~4급
+        if (num >= 20) return "level-badge grade-high";   // 3급Ⅱ~2급
+        return "level-badge grade-elite";                  // 인명용, 1급, 특급 등
     }
 
     // Comprehensive Korean Names mapping for Kangxi radicals and common variants
