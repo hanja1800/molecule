@@ -210,16 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const meta = hanjaDb[char];
             if (!meta) return;
             
-            const isCombo = meta.mn.includes('(:)') || meta.mn.includes('（：）') || meta.mn.includes('(：)');
-            const isLong = !isCombo && (meta.mn.endsWith(':') || meta.mn.endsWith('：'));
             const cleanMn = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
-            
-            let vowelMark = '';
-            if (isCombo) {
-                vowelMark = ' <span style="color:#00f0ff; font-weight:800; font-size:0.8rem;" title="장단음 겸용">[겸용]</span>';
-            } else if (isLong) {
-                vowelMark = ' <span style="color:#ffc107; font-weight:800; font-size:0.8rem;" title="장음(긴소리)">[장음]</span>';
-            }
             
             const card = document.createElement("div");
             card.className = `hanja-row-card ${activeSelectedChar === char ? "active" : ""}`;
@@ -229,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="row-left">
                     <div class="char-avatar">${char}</div>
                     <div class="row-info">
-                        <span class="row-meaning-reading">${meta.r} (${cleanMn})${vowelMark}</span>
+                        <span class="row-meaning-reading">${meta.r} (${cleanMn})</span>
                         <span class="row-meta-sub">부수: ${meta.rd} | ${meta.s2}획</span>
                     </div>
                 </div>
@@ -262,43 +253,14 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Populate profile card
         // r: reading, mn: meaning, lv: grade, rd: radical, s1: strokes, s2: total_strokes
-        const isCombo = meta.mn.includes('(:)') || meta.mn.includes('（：）') || meta.mn.includes('(：)');
-        const isLong = !isCombo && (meta.mn.endsWith(':') || meta.mn.endsWith('：'));
         const cleanMeaning = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
         
-        // Render character with vowel mark if applicable
-        let displayCharHtml = char;
-        if (isCombo) {
-            displayCharHtml += `<span class="vowel-mark-char">(:)</span>`;
-        } else if (isLong) {
-            displayCharHtml += `<span class="vowel-mark-char">:</span>`;
-        }
-        detailChar.innerHTML = displayCharHtml;
+        detailChar.innerHTML = char;
         
         detailReadingMeaning.textContent = `${meta.r} (${cleanMeaning})`;
         detailLevel.textContent = meta.lv;
         detailRadical.textContent = `${meta.rd} (획수: ${meta.s1}획)`;
         detailStrokes.textContent = `${meta.s2}획`;
-        
-        // Dynamic Vowel Length Badge styling
-        const vowelItem = document.getElementById("detail-vowel-item");
-        const vowelEl = document.getElementById("detail-vowel");
-        if (vowelItem && vowelEl) {
-            vowelItem.className = "badge-item"; // Reset class
-            if (isCombo) {
-                vowelItem.classList.add("vowel-long");
-                vowelEl.innerHTML = `<strong>장단음 겸용 [(:)]</strong>`;
-                vowelItem.querySelector("i").className = "ti ti-volume"; // volume icon
-            } else if (isLong) {
-                vowelItem.classList.add("vowel-long");
-                vowelEl.innerHTML = `<strong>장음 [ː]</strong>`;
-                vowelItem.querySelector("i").className = "ti ti-volume"; // volume icon
-            } else {
-                vowelItem.classList.add("vowel-short");
-                vowelEl.innerHTML = `단음`; // Cleaned output
-                vowelItem.querySelector("i").className = "ti ti-volume-3"; // volume-3 icon
-            }
-        }
         
         // Recursive Lego-Block Tree Building
         idsTreeContainer.innerHTML = "";
