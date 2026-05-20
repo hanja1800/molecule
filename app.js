@@ -492,11 +492,13 @@ document.addEventListener("DOMContentLoaded", () => {
             cellContainer.className = "family-grid-cells";
             
             gradeGroups[grade].forEach(char => {
+                const meta = hanjaDb[char];
+                const cleanMn = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
                 const cell = document.createElement("div");
                 cell.className = "family-cell-card";
                 cell.innerHTML = `
                     <span class="family-cell-char">${char}</span>
-                    <span class="family-cell-reading">${hanjaDb[char].r}</span>
+                    <span class="family-cell-reading">${meta.r} (${cleanMn})</span>
                 `;
                 
                 cell.addEventListener("click", () => {
