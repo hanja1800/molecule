@@ -401,8 +401,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         width: 100,
                         height: 100,
                         padding: 5,
-                        strokeAnimationSpeed: 1.5,
-                        delayBetweenStrokes: 50,
+                        strokeAnimationSpeed: 0.8, // 1.5에서 0.8로 낮추어 획을 긋는 속도 감소
+                        delayBetweenStrokes: 150,  // 50에서 150으로 늘려 획 사이의 간격 증가 (여유로움)
                         strokeColor: "#1e3a8a", // Accent blue
                         radicalColor: "#dc2626", // Radical red
                         showCharacter: false, 
