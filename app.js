@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const levelButtonsContainer = document.getElementById("level-buttons-container");
     const hanziWriterTarget = document.getElementById("hanzi-writer-target");
     const replayAnimationBtn = document.getElementById("replay-animation-btn");
+    const fallbackMessage = document.getElementById("fallback-message");
     const hugeCharContainer = document.getElementById("huge-char-container");
 
     // 2. State Management
@@ -46,12 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let activeLevelFilter = null;
     let hanziWriter = null;
     
-    // Hanzi Writer 이체자 매핑 사전 (한국 정체자 -> 대만/중국 애니메이션 지원자)
-    const HANJA_ALIAS_MAP = {
-        "敎": "教", "眞": "真", "着": "著", "氷": "冰", "絶": "绝",
-        "靑": "青", "綠": "绿", "鬪": "鬥", "龜": "龟", "龍": "龙",
-        "黃": "黄", "黑": "黑", "緖": "绪", "藥": "药", "讀": "读"
-    };
     const HISTORY_KEY = "hanja_molecule_search_history_v1";
 
     // 3. Ultra-premium Database Loader (Fetch with detailed percentage progress)
@@ -389,19 +384,20 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Handle Hanzi Writer Integration (Async with fallback)
         if (typeof HanziWriter !== 'undefined') {
-            // Check if there is a known alias for missing Korean traditional characters
-            const baseChar = HANJA_ALIAS_MAP[char] || char;
+            const baseChar = char;
             
             // Hide everything initially until load is confirmed
             detailChar.style.opacity = "1"; 
             hanziWriterTarget.classList.add("hidden");
             replayAnimationBtn.classList.add("hidden");
+            fallbackMessage.classList.add("hidden");
             
             HanziWriter.loadCharacterData(baseChar).then((charData) => {
                 // Loaded successfully
                 detailChar.style.opacity = "0"; // Hide the static text
                 hanziWriterTarget.classList.remove("hidden"); // Show SVG
                 replayAnimationBtn.classList.remove("hidden"); // Show button
+                fallbackMessage.classList.add("hidden"); // Hide warning
                 
                 if (!hanziWriter) {
                     hanziWriterTarget.innerHTML = "";
@@ -430,6 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 detailChar.style.opacity = "1";
                 hanziWriterTarget.classList.add("hidden");
                 replayAnimationBtn.classList.add("hidden");
+                fallbackMessage.classList.remove("hidden"); // Show warning message
             });
         }
         

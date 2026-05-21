@@ -744,6 +744,27 @@ body {
     border-color: rgba(30, 58, 138, 0.25);
 }
 
+.fallback-message {
+    margin-top: 4px;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: rgba(220, 38, 38, 0.04);
+    border: 1px dashed rgba(220, 38, 38, 0.2);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    text-align: left;
+    line-height: 1.4;
+    max-width: 240px;
+}
+.fallback-message i {
+    color: var(--color-radical);
+    margin-top: 1px;
+}
+
 /* 피드백 #6: profile-card scale 호버 제거 — 시각적 잡음 감소 */
 .profile-card:hover .huge-char-glow {
     border-color: var(--accent-blue);
