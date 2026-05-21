@@ -285,6 +285,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
         resultsList.innerHTML = "";
         
+        const fragment = document.createDocumentFragment();
+        
         chars.forEach(char => {
             const meta = hanjaDb[char];
             if (!meta) return;
@@ -323,8 +325,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 showHanjaDetails(char, true);
             });
             
-            resultsList.appendChild(card);
+            fragment.appendChild(card);
         });
+        
+        resultsList.appendChild(fragment);
     }
 
     // 5. Hanja Profile & LEGO IDS Tree Renderer
