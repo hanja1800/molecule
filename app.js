@@ -295,9 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
             
             let vowelMark = '';
             if (isCombo) {
-                vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">◑</span>';
+                vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">(:)</span>';
             } else if (isLong) {
-                vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">●</span>';
+                vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">:</span>';
             }
             
             const card = document.createElement("div");
@@ -352,11 +352,11 @@ document.addEventListener("DOMContentLoaded", () => {
         let displayCharHtml = char;
         let vowelMark = '';
         if (isCombo) {
-            displayCharHtml += `<span class="vowel-mark-char vowel-tag--combo" title="장단음 겸용">◑</span>`;
-            vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">◑</span>';
+            displayCharHtml += `<span class="vowel-mark-char vowel-tag--combo" title="장단음 겸용">(:)</span>`;
+            vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">(:)</span>';
         } else if (isLong) {
-            displayCharHtml += `<span class="vowel-mark-char vowel-tag--long" title="장음(긴소리)">●</span>`;
-            vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">●</span>';
+            displayCharHtml += `<span class="vowel-mark-char vowel-tag--long" title="장음(긴소리)">:</span>`;
+            vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">:</span>';
         }
         detailChar.innerHTML = displayCharHtml;
         
@@ -794,9 +794,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 let vowelMark = '';
                 if (isCombo) {
-                    vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">◑</span>';
+                    vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">(:)</span>';
                 } else if (isLong) {
-                    vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">●</span>';
+                    vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">:</span>';
                 }
 
                 const cell = document.createElement("div");
