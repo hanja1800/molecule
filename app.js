@@ -177,15 +177,21 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.textContent = grade.name;
             btn.dataset.code = grade.code;
             
+            btn.title = `${grade.name} 필터 적용`;
             btn.addEventListener("click", () => {
                 if (activeLevelFilter === grade.code) {
                     activeLevelFilter = null;
                     btn.classList.remove("active");
+                    btn.title = `${grade.name} 필터 적용`;
                     handleSearch(); // Resume normal search if deselected
                 } else {
-                    document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
+                    document.querySelectorAll(".level-btn").forEach(b => {
+                        b.classList.remove("active");
+                        b.title = `${b.textContent} 필터 적용`;
+                    });
                     activeLevelFilter = grade.code;
                     btn.classList.add("active");
+                    btn.title = `${grade.name} 필터 해제하려면 클릭`;
                     searchByLevel(grade.code);
                 }
             });
@@ -289,9 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
             
             let vowelMark = '';
             if (isCombo) {
-                vowelMark = ' <span style="color:#00f0ff; font-weight:800; font-size:0.8rem;" title="장단음 겸용">[겸용]</span>';
+                vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">◑</span>';
             } else if (isLong) {
-                vowelMark = ' <span style="color:#ffc107; font-weight:800; font-size:0.8rem;" title="장음(긴소리)">[장음]</span>';
+                vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">●</span>';
             }
             
             const card = document.createElement("div");
@@ -302,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="row-left">
                     <div class="char-avatar">${char}</div>
                     <div class="row-info">
-                        <span class="row-meaning-reading">${meta.r} (${cleanMn})${vowelMark}</span>
+                        <span class="row-meaning-reading">${meta.r}${vowelMark} (${cleanMn})</span>
                         <span class="row-meta-sub">부수: ${meta.rd} | ${meta.s2}획</span>
                     </div>
                 </div>
@@ -344,14 +350,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const cleanMeaning = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
         
         let displayCharHtml = char;
+        let vowelMark = '';
         if (isCombo) {
-            displayCharHtml += `<span class="vowel-mark-char">(:)</span>`;
+            displayCharHtml += `<span class="vowel-mark-char vowel-tag--combo" title="장단음 겸용">◑</span>`;
+            vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">◑</span>';
         } else if (isLong) {
-            displayCharHtml += `<span class="vowel-mark-char">:</span>`;
+            displayCharHtml += `<span class="vowel-mark-char vowel-tag--long" title="장음(긴소리)">●</span>`;
+            vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">●</span>';
         }
         detailChar.innerHTML = displayCharHtml;
         
-        detailReadingMeaning.textContent = `${meta.r} (${cleanMeaning})`;
+        detailReadingMeaning.innerHTML = `${meta.r}${vowelMark} (${cleanMeaning})`;
         detailLevel.textContent = getFriendlyGrade(meta.lv);
         detailRadical.textContent = `${meta.rd} (획수: ${meta.s1}획)`;
         detailStrokes.textContent = `${meta.s2}획`;
@@ -779,12 +788,22 @@ document.addEventListener("DOMContentLoaded", () => {
             
             gradeGroups[grade].forEach(char => {
                 const meta = hanjaDb[char];
+                const isCombo = meta.mn.includes('(:)') || meta.mn.includes('（：）') || meta.mn.includes('(：)');
+                const isLong = !isCombo && (meta.mn.endsWith(':') || meta.mn.endsWith('：'));
                 const cleanMn = meta.mn.replace(/[:：\s]*\(?[:：]\)?$/g, "").trim();
+                
+                let vowelMark = '';
+                if (isCombo) {
+                    vowelMark = '<span class="vowel-tag vowel-tag--combo" title="장단음 겸용">◑</span>';
+                } else if (isLong) {
+                    vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">●</span>';
+                }
+
                 const cell = document.createElement("div");
                 cell.className = "family-cell-card";
                 cell.innerHTML = `
                     <span class="family-cell-char">${char}</span>
-                    <span class="family-cell-reading">${meta.r} (${cleanMn})</span>
+                    <span class="family-cell-reading">${meta.r}${vowelMark} (${cleanMn})</span>
                 `;
                 
                 cell.addEventListener("click", () => {
