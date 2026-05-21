@@ -783,7 +783,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             groupDiv.innerHTML = `
                 <div class="family-level-title">
-                    <i class="ti ti-bookmark"></i> 어문회 배정 한자 - ${grade} (${gradeGroups[grade].length}자)
+                    <i class="ti ti-bookmark"></i> 한국어문회 배정 한자 - ${grade} (${gradeGroups[grade].length}자)
                 </div>
             `;
             
