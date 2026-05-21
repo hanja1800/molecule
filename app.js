@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const familyComponentSelect = document.getElementById("family-component-select");
     const familyCount = document.getElementById("family-count");
     const familyGridContainer = document.getElementById("family-grid-container");
+    const levelButtonsContainer = document.getElementById("level-buttons-container");
 
     // 2. State Management
     let hanjaDb = {};
@@ -39,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let activeQuery = "";
     let activeClusterTab = "all";
     let activeSelectedChar = "";
+    let activeLevelFilter = null;
     const HISTORY_KEY = "hanja_molecule_search_history_v1";
 
     // 3. Ultra-premium Database Loader (Fetch with detailed percentage progress)
@@ -54,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Inject total stats
             document.getElementById("stat-total-hanja").textContent = Object.keys(hanjaDb).length.toLocaleString();
             
+            renderLevelButtons();
             renderHistory();
             
             // Auto-search if URL parameter 'q' is provided
@@ -73,6 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleSearch() {
         const query = searchInput.value.trim().toLowerCase();
         activeQuery = query;
+        
+        if (activeLevelFilter !== null) {
+            activeLevelFilter = null;
+            document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
+        }
         
         if (query === "") {
             clearSearchBtn.classList.add("hidden");
@@ -136,6 +144,71 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>한자, 한글 음, 혹은 부수 구성요소를 입력하여 한자를 탐색해보세요.</p>
             </div>
         `;
+    }
+
+    // 4.1. Level Filter Search Engine
+    function renderLevelButtons() {
+        if (!levelButtonsContainer) return;
+        levelButtonsContainer.innerHTML = "";
+        
+        const grades = [
+            { name: "특급", code: "00" },
+            { name: "특급II", code: "02" },
+            { name: "1급", code: "10" },
+            { name: "2급", code: "20" },
+            { name: "2급II", code: "22" },
+            { name: "3급", code: "30" },
+            { name: "3급II", code: "32" },
+            { name: "4급", code: "40" },
+            { name: "4급II", code: "42" },
+            { name: "5급", code: "50" },
+            { name: "5급II", code: "52" },
+            { name: "6급", code: "60" },
+            { name: "6급II", code: "62" },
+            { name: "7급", code: "70" },
+            { name: "7급II", code: "72" },
+            { name: "8급", code: "80" },
+            { name: "인명용", code: "12" }
+        ];
+
+        grades.forEach(grade => {
+            const btn = document.createElement("button");
+            btn.className = "level-btn";
+            btn.textContent = grade.name;
+            btn.dataset.code = grade.code;
+            
+            btn.addEventListener("click", () => {
+                if (activeLevelFilter === grade.code) {
+                    activeLevelFilter = null;
+                    btn.classList.remove("active");
+                    handleSearch(); // Resume normal search if deselected
+                } else {
+                    document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
+                    activeLevelFilter = grade.code;
+                    btn.classList.add("active");
+                    searchByLevel(grade.code);
+                }
+            });
+            
+            levelButtonsContainer.appendChild(btn);
+        });
+    }
+
+    function searchByLevel(code) {
+        searchInput.value = "";
+        activeQuery = "";
+        clearSearchBtn.classList.add("hidden");
+        
+        const matches = [];
+        for (const [char, entry] of Object.entries(hanjaDb)) {
+            const entryStrCode = String(entry.lv).replace(/\s+/g, "").trim();
+            if (entryStrCode === code || (code === "02" && entryStrCode === "01")) {
+                matches.push(char);
+            }
+        }
+        
+        clusteringTabBar.classList.add("hidden");
+        renderSearchResults(matches);
     }
 
     // Homonym Radical Clustering (동음이의어 부수별 군집화 UI)
