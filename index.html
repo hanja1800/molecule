@@ -118,9 +118,13 @@
                         <!-- 프로필 카드 -->
                         <div class="glass-card profile-card">
                             <div class="profile-main">
-                                <div class="huge-char-glow">
+                                <div id="huge-char-container" class="huge-char-glow" title="클릭해서 다시 보기">
                                     <span id="detail-char" class="huge-char">家</span>
+                                    <div id="hanzi-writer-target" class="hanzi-writer-target"></div>
                                 </div>
+                                <button id="replay-animation-btn" class="text-btn replay-btn hidden">
+                                    <i class="ti ti-player-play-filled"></i> 다시 재생
+                                </button>
                                 <div class="profile-meta">
                                     <h2 id="detail-reading-meaning">집 가</h2>
                                     <div class="badge-grid">
@@ -176,6 +180,9 @@
         </footer>
     </div>
 
+    <!-- External Library -->
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    
     <!-- Core App Logic -->
     <script src="app.js"></script>
 </body>

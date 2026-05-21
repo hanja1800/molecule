@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const familyCount = document.getElementById("family-count");
     const familyGridContainer = document.getElementById("family-grid-container");
     const levelButtonsContainer = document.getElementById("level-buttons-container");
+    const hanziWriterTarget = document.getElementById("hanzi-writer-target");
+    const replayAnimationBtn = document.getElementById("replay-animation-btn");
+    const hugeCharContainer = document.getElementById("huge-char-container");
 
     // 2. State Management
     let hanjaDb = {};
@@ -41,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let activeClusterTab = "all";
     let activeSelectedChar = "";
     let activeLevelFilter = null;
+    let hanziWriter = null;
     const HISTORY_KEY = "hanja_molecule_search_history_v1";
 
     // 3. Ultra-premium Database Loader (Fetch with detailed percentage progress)
@@ -57,7 +61,19 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("stat-total-hanja").textContent = Object.keys(hanjaDb).length.toLocaleString();
             
             renderLevelButtons();
+            renderLevelButtons();
             renderHistory();
+            
+            // Replay animation handlers
+            if (hugeCharContainer && replayAnimationBtn) {
+                const replayFunc = () => {
+                    if (hanziWriter && !hanziWriterTarget.classList.contains("hidden")) {
+                        hanziWriter.animateCharacter();
+                    }
+                };
+                hugeCharContainer.addEventListener("click", replayFunc);
+                replayAnimationBtn.addEventListener("click", replayFunc);
+            }
             
             // Auto-search if URL parameter 'q' is provided
             const urlParams = new URLSearchParams(window.location.search);
@@ -363,6 +379,51 @@ document.addEventListener("DOMContentLoaded", () => {
             vowelMark = '<span class="vowel-tag vowel-tag--long" title="장음(긴소리)">:</span>';
         }
         detailChar.innerHTML = displayCharHtml;
+        
+        // Handle Hanzi Writer Integration (Async with fallback)
+        if (typeof HanziWriter !== 'undefined') {
+            const baseChar = char;
+            
+            // Hide everything initially until load is confirmed
+            detailChar.style.opacity = "1"; 
+            hanziWriterTarget.classList.add("hidden");
+            replayAnimationBtn.classList.add("hidden");
+            
+            HanziWriter.loadCharacterData(baseChar).then((charData) => {
+                // Loaded successfully
+                detailChar.style.opacity = "0"; // Hide the static text
+                hanziWriterTarget.classList.remove("hidden"); // Show SVG
+                replayAnimationBtn.classList.remove("hidden"); // Show button
+                
+                if (!hanziWriter) {
+                    hanziWriterTarget.innerHTML = "";
+                    hanziWriter = HanziWriter.create(hanziWriterTarget, baseChar, {
+                        width: 100,
+                        height: 100,
+                        padding: 5,
+                        strokeAnimationSpeed: 1.5,
+                        delayBetweenStrokes: 50,
+                        strokeColor: "#1e3a8a", // Accent blue
+                        radicalColor: "#dc2626", // Radical red
+                        showCharacter: false, 
+                        showOutline: true,
+                        outlineColor: "rgba(148, 163, 184, 0.25)"
+                    });
+                } else {
+                    hanziWriter.setCharacter(baseChar);
+                }
+                
+                // Play animation
+                hanziWriter.animateCharacter();
+                
+            }).catch((err) => {
+                // Character not supported (e.g. Korean Hanja like 乭, or no data)
+                console.log("HanziWriter data not available for:", baseChar);
+                detailChar.style.opacity = "1";
+                hanziWriterTarget.classList.add("hidden");
+                replayAnimationBtn.classList.add("hidden");
+            });
+        }
         
         detailReadingMeaning.innerHTML = `${meta.r}${vowelMark} (${cleanMeaning})`;
         detailLevel.textContent = getFriendlyGrade(meta.lv);

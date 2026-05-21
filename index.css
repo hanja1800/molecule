@@ -704,6 +704,46 @@ body {
     line-height: 1;
 }
 
+/* Hanzi Writer Integration */
+.hanzi-writer-target {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hanzi-writer-target svg {
+    display: block;
+}
+
+.replay-btn {
+    margin-top: -6px;
+    margin-bottom: 4px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    background: rgba(30, 58, 138, 0.04);
+    color: var(--accent-blue);
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(30, 58, 138, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.replay-btn:hover {
+    background: rgba(30, 58, 138, 0.08);
+    transform: translateY(-1px);
+    text-decoration: none;
+    border-color: rgba(30, 58, 138, 0.25);
+}
+
 /* 피드백 #6: profile-card scale 호버 제거 — 시각적 잡음 감소 */
 .profile-card:hover .huge-char-glow {
     border-color: var(--accent-blue);
