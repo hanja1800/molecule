@@ -279,6 +279,7 @@ body {
     color: var(--text-muted);
     font-family: inherit;
     position: relative;
+    white-space: nowrap;
 }
 
 .level-btn:hover {
